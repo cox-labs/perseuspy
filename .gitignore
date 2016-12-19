@@ -1,0 +1,10 @@
+*.pyc
+*.swp
+*.swo
+
+/dist/
+
+/*.egg-info
+
+__pycache__
+*.pkl
