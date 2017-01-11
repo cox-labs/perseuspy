@@ -1,5 +1,4 @@
 """
-
 No support for
  - numerical annotation rows
  - multi-numeric rows
@@ -73,11 +72,9 @@ def to_perseus(df, filename, main_columns=None, separator=separator, type_map = 
     :param main_columns: Main columns. Will be infered if set to None. All numeric columns up-until the first non-numeric column are considered main columns.
     :param separator: For separating fields, default '\t'
     """
-    import ipdb; ipdb.set_trace()
     column_names = df.columns.get_level_values('Column Name')
     annotations = {}
     main_columns = _infer_main_columns(df) if main_columns is None else main_columns
-    print(main_columns)
     annotations['Type'] = ['E' if i in main_columns else type_map[dtype] for i, dtype in enumerate(df.dtypes)]
     annotation_row_names = set(df.columns.names) - {'Column Name'}
     for name in annotation_row_names:
