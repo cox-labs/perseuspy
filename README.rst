@@ -4,6 +4,12 @@ perseuspy README
 Utility and covenience functions for Perseus-python interop.
 Building on the `pandas` package.
 
+Installation
+------------
+
+.. code:: bash
+    pip install git+https://github.com/jdrudolph/perseuspy.git
+
 Usage
 ------------
 
