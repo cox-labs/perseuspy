@@ -1,6 +1,9 @@
 perseuspy README
 ===============
 
+.. image:: https://travis-ci.org/jdrudolph/perseuspy.svg?branch=master
+    :target: https://travis-ci.org/jdrudolph/perseuspy
+
 Utility and covenience functions for Perseus-python interop.
 Building on the `pandas` package.
 
