@@ -9,8 +9,10 @@ Building on the `pandas` package.
 
 Installation
 ------------
+Install using pip directly from `github`:
 
 .. code:: bash
+
     pip install git+https://github.com/jdrudolph/perseuspy.git
 
 Usage
