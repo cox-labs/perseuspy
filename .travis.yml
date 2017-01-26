@@ -1,0 +1,8 @@
+language: python
+python:
+  - "3.5"
+  - "3.6"
+# command to install dependencies
+install: "pip install -e ."
+# command to run tests
+script: "nosetests perseuspy.test.test_io"

@@ -10,19 +10,19 @@ from collections import OrderedDict
 separator = '\t'
 perseus_to_dtype = {'E' : float, 'T' : str, 'C' : 'category', 'M' : str, 'N' : float}
 dtype_to_perseus = { np.dtype('float') : 'N', np.dtype('str') : 'T', np.dtype('object') : 'T',
-        pd.Categorical.dtype : 'C' }
+        np.dtype('int64') : 'N', pd.Categorical.dtype : 'C' }
 
-def read_annotations(filename, separator, type_map=perseus_to_dtype):
+def read_annotations(path_or_file, separator, type_map=perseus_to_dtype):
     """
     Read all annotations from the specified file.
     
-    >>> annotations = read_annotations(filename, separator)
+    >>> annotations = read_annotations(path_or_file, separator)
     >>> colnames = annotations['Column Name']
     >>> types = annotations['Type']
     >>> annot_row = annotations['Annot. row name']
     """
     annotations = OrderedDict({})
-    with open(filename) as f:
+    with PathOrFile(path_or_file, 'r') as f:
         annotations['Column Name'] = f.readline().strip().split(separator)
         for line in f:
             if line.startswith('#!{'):
@@ -44,10 +44,10 @@ def create_column_index(annotations):
     ncol = len(_column_index['Column Name'])
     categorical_rows = {name.replace('C:','',1) : values + [''] * (ncol - len(values)) for name, values in annotations.items() if name.startswith('C:')}
     _column_index.update(categorical_rows)
-    column_index = pd.MultiIndex.from_tuples(list(zip(*_column_index.values())), names=_column_index.keys())
+    column_index = pd.MultiIndex.from_tuples(list(zip(*_column_index.values())), names=list(_column_index.keys()))
     return column_index
 
-def read_perseus(filename, type_map = perseus_to_dtype):
+def read_perseus(path_or_file, type_map = perseus_to_dtype):
     """
     Read a Perseus-formatted matrix into a pd.DataFrame.
     Annotation rows will be converted into a multi-index.
@@ -55,20 +55,23 @@ def read_perseus(filename, type_map = perseus_to_dtype):
     By monkey-patching the returned pd.DataFrame a `to_perseus`
     method for exporting the pd.DataFrame is made available.
     """
-    annotations = read_annotations(filename, separator, type_map)
+    annotations = read_annotations(path_or_file, separator, type_map)
     column_index = create_column_index(annotations)
-    dtype = {name : t for name, t in zip(annotations['Column Name'], annotations['Type'])}
-    df = pd.read_csv(filename, sep=separator, comment='#', dtype = dtype)
+    if 'Type' in annotations:
+        dtype = {name : t for name, t in zip(annotations['Column Name'], annotations['Type'])}
+        df = pd.read_csv(path_or_file, sep=separator, comment='#', dtype = dtype)
+    else:
+        df = pd.read_csv(path_or_file, sep=separator, comment='#')
     df.columns = column_index
     return df
 
 import numpy as np
-def to_perseus(df, filename, main_columns=None, separator=separator, type_map = dtype_to_perseus):
+def to_perseus(df, path_or_file, main_columns=None, separator=separator, type_map = dtype_to_perseus):
     """
     Save pd.DataFrame to Perseus text format.
 
     :param df: pd.DataFrame
-    :param filename: File name
+    :param path_or_file: File name or file-like object
     :param main_columns: Main columns. Will be infered if set to None. All numeric columns up-until the first non-numeric column are considered main columns.
     :param separator: For separating fields, default '\t'
     """
@@ -79,11 +82,30 @@ def to_perseus(df, filename, main_columns=None, separator=separator, type_map = 
     annotation_row_names = set(df.columns.names) - {'Column Name'}
     for name in annotation_row_names:
         annotations['C:{}'.format(name)] = df.columns.get_level_values(name)
-    with open(filename, 'w') as f:
+    with PathOrFile(path_or_file, 'w') as f:
         f.write(separator.join(column_names) + '\n')
         for name, values in annotations.items():
             f.write('#!{{{name}}}{values}\n'.format(name=name, values=separator.join(values)))
         df.to_csv(f, header=None, index=False, sep=separator)
+
+class PathOrFile():
+    """Small context manager for file paths or file-like objects"""
+    def __init__(self, path_or_file, mode = None):
+        self.path_or_file = path_or_file
+        self.mode = mode
+
+    def __enter__(self):
+        if isinstance(self.path_or_file, str):
+            self.open_file = open(self.path_or_file, self.mode)
+            return self.open_file
+        else:
+            self.open_file = None
+            return self.path_or_file
+
+    def __exit__(self, *args):
+        if self.open_file:
+            self.open_file.close()
+
 
 def _infer_main_columns(df):
     """
