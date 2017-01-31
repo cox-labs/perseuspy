@@ -79,7 +79,7 @@ def read_perseus(path_or_file, type_map = perseus_to_dtype, **kwargs):
 import numpy as np
 def to_perseus(df, path_or_file, main_columns=None,
         separator=separator, type_map = dtype_to_perseus,
-        numerical_annotation_columns = set([])):
+        numerical_annotation_rows = set([])):
     """
     Save pd.DataFrame to Perseus text format.
 
@@ -97,12 +97,12 @@ def to_perseus(df, path_or_file, main_columns=None,
             for i, dtype in enumerate(df.dtypes)]
     annotation_row_names = set(df.columns.names) - {'Column Name'}
     for name in annotation_row_names:
-        annotation_type = 'N' if name in numerical_annotation_columns else 'C'
+        annotation_type = 'N' if name in numerical_annotation_rows else 'C'
         annotations['{}:{}'.format(annotation_type, name)] = df.columns.get_level_values(name)
     with PathOrFile(path_or_file, 'w') as f:
         f.write(separator.join(column_names) + '\n')
         for name, values in annotations.items():
-            f.write('#!{{{name}}}{values}\n'.format(name=name, values=separator.join(values)))
+            f.write('#!{{{name}}}{values}\n'.format(name=name, values=separator.join([str(x) for x in values])))
         df.to_csv(f, header=None, index=False, sep=separator)
 
 class PathOrFile():
