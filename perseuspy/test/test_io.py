@@ -19,3 +19,15 @@ class TestReading(TestCase):
         out = StringIO()
         df.to_perseus(out)
         self.assertIsNot(str(out), '')
+
+    def test_inferring_and_setting_main_columns(self):
+        def typeRow(df, main_columns=None):
+            out = StringIO()
+            df.to_perseus(out, main_columns)
+            out.seek(0)
+            typeRow = out.readlines()[1]
+            return typeRow
+
+        df = pd.DataFrame({'a' : [2,3], 'b': [1,2], 'c': ['a','b'], 'd': [3,4]})
+        self.assertEqual('#!{Type}E\tE\tT\tN\n', typeRow(df))
+        self.assertEqual('#!{Type}N\tE\tT\tE\n', typeRow(df, main_columns={'b','d'}))

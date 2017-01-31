@@ -12,7 +12,7 @@ perseus_to_dtype = {'E' : float, 'T' : str, 'C' : 'category', 'M' : str, 'N' : f
 dtype_to_perseus = { np.dtype('float') : 'N', np.dtype('str') : 'T', np.dtype('object') : 'T',
         np.dtype('int64') : 'N', pd.Categorical.dtype : 'C' }
 
-def read_annotations(path_or_file, separator, type_map=perseus_to_dtype):
+def read_annotations(path_or_file, separator, type_map=perseus_to_dtype, reset=True):
     """
     Read all annotations from the specified file.
     
@@ -20,9 +20,15 @@ def read_annotations(path_or_file, separator, type_map=perseus_to_dtype):
     >>> colnames = annotations['Column Name']
     >>> types = annotations['Type']
     >>> annot_row = annotations['Annot. row name']
+
+    :param path_or_file: Path or file-like object
+    :param separator: Column separator
+    :param type_map: Mapping Perseus types to numpy.dtype
+    :param reset: Reset the file after reading. Useful for file-like, no-op for paths.
+    :returns: Ordered dictionary of annotations.
     """
     annotations = OrderedDict({})
-    with PathOrFile(path_or_file, 'r') as f:
+    with PathOrFile(path_or_file, 'r', reset=reset) as f:
         annotations['Column Name'] = f.readline().strip().split(separator)
         for line in f:
             if line.startswith('#!{'):
@@ -82,10 +88,13 @@ def to_perseus(df, path_or_file, main_columns=None,
     :param main_columns: Main columns. Will be infered if set to None. All numeric columns up-until the first non-numeric column are considered main columns.
     :param separator: For separating fields, default '\t'
     """
+    if not df.columns.name:
+        df.columns.name = 'Column Name'
     column_names = df.columns.get_level_values('Column Name')
     annotations = {}
     main_columns = _infer_main_columns(df) if main_columns is None else main_columns
-    annotations['Type'] = ['E' if i in main_columns else type_map[dtype] for i, dtype in enumerate(df.dtypes)]
+    annotations['Type'] = ['E' if column_names[i] in main_columns else type_map[dtype]
+            for i, dtype in enumerate(df.dtypes)]
     annotation_row_names = set(df.columns.names) - {'Column Name'}
     for name in annotation_row_names:
         annotation_type = 'N' if name in numerical_annotation_columns else 'C'
@@ -97,13 +106,20 @@ def to_perseus(df, path_or_file, main_columns=None,
         df.to_csv(f, header=None, index=False, sep=separator)
 
 class PathOrFile():
-    """Small context manager for file paths or file-like objects"""
-    def __init__(self, path_or_file, mode = None):
+    """Small context manager for file paths or file-like objects
+    :param path_or_file: Path to a file or file-like object
+    :param mode: Set reading/writing mode
+    :param reset: Reset file-like to initial position. Has no effect on path."""
+    def __init__(self, path_or_file, mode = None, reset=False):
         self.path_or_file = path_or_file
         self.mode = mode
+        self.isPath = isinstance(path_or_file, str)
+        self.reset = reset and not self.isPath
+        if self.reset:
+            self.position = self.path_or_file.seek(0, 1)
 
     def __enter__(self):
-        if isinstance(self.path_or_file, str):
+        if self.isPath:
             self.open_file = open(self.path_or_file, self.mode)
             return self.open_file
         else:
@@ -113,16 +129,19 @@ class PathOrFile():
     def __exit__(self, *args):
         if self.open_file:
             self.open_file.close()
-
+        if self.reset:
+            self.path_or_file.seek(self.position)
 
 def _infer_main_columns(df):
     """
     All numeric columns up-until the first non-numeric column are considered main columns.
+    :param df: The pd.DataFrame
+    :returns: The names of the infered main columns
     """
     main_columns = []
     for i,dtype in enumerate(df.dtypes):
         if dtype in {np.dtype('float'), np.dtype('int')}:
-            main_columns.append(i)
+            main_columns.append(df.columns[i])
         else:
             break
     return main_columns
