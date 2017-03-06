@@ -132,16 +132,20 @@ class PathOrFile():
         if self.reset:
             self.path_or_file.seek(self.position)
 
-def _infer_main_columns(df):
+_numeric_dtypes = {np.dtype('float32'), np.dtype('float64'), np.dtype('int32'), np.dtype('int64')}
+def _infer_main_columns(df, index_level='Column Name', numeric_dtypes=_numeric_dtypes):
     """
     All numeric columns up-until the first non-numeric column are considered main columns.
     :param df: The pd.DataFrame
+    :param index_level: Name of the index level of the column names. Default 'Column Name'
+    :param numeric_dtypes: Set of numpy.dtype containing all numeric types. Default int/float.
     :returns: The names of the infered main columns
     """
+    columns = df.columns.get_level_values(index_level)
     main_columns = []
     for i,dtype in enumerate(df.dtypes):
-        if dtype in {np.dtype('float'), np.dtype('int')}:
-            main_columns.append(df.columns[i])
+        if dtype in numeric_dtypes:
+            main_columns.append(columns[i])
         else:
             break
     return main_columns
