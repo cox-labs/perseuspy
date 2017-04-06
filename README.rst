@@ -35,7 +35,7 @@ Plugin template
 The following snippet can be used as a starting point
 for python scripting in Perseus.
 
-..code:: python
+.. code:: python
 
     import sys
     from perseuspy import pd
