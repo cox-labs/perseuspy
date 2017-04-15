@@ -70,9 +70,10 @@ def read_perseus(path_or_file, type_map = perseus_to_dtype, **kwargs):
     column_index = create_column_index(annotations)
     if 'Type' in annotations:
         dtype = {name : t for name, t in zip(annotations['Column Name'], annotations['Type'])}
-        df = pd.read_csv(path_or_file, sep=separator, comment='#', dtype = dtype, **kwargs)
-    else:
-        df = pd.read_csv(path_or_file, sep=separator, comment='#', **kwargs)
+        if 'dtype' in kwargs:
+            dtype.update(kwargs['dtype'])
+        kwargs['dtype'] = dtype
+    df = pd.read_csv(path_or_file, sep=separator, comment='#', **kwargs)
     df.columns = column_index
     return df
 
