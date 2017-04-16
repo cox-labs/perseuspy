@@ -1,0 +1,21 @@
+  <Parameters>
+    <ParameterGroup Name="" CollapsedDefault="false">
+      <IntParam Type="BaseLibS.Param.IntParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Number of columns">
+	<Value>15</Value>
+      </IntParam>
+      <DoubleParam Type="BaseLibS.Param.DoubleParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Box size">
+	<Value>2</Value>
+      </DoubleParam>
+      <FileParam Type="BaseLibS.Param.FileParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="someFile.txt">
+	<Value>some_file.txt</Value>
+      </FileParam>
+      <SingleChoiceParam Type="BaseLibS.Param.SingleChoiceWithSubParams, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Mode">
+	<Value>1</Value>
+	<Values>
+	  <Item>One normal distribution</Item>
+	  <Item>Two normal distributions</Item>
+	  <Item>Many normal distributions</Item>
+	</Values>
+      </SingleChoiceParam>
+    </ParameterGroup>
+  </Parameters>

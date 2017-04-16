@@ -12,3 +12,4 @@ setup(name='perseuspy',
         test_suite = 'nose.collector',
         test_require= ['nose']
 ) 
+

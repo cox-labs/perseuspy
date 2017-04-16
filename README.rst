@@ -39,8 +39,10 @@ for python scripting in Perseus.
 
     import sys
     from perseuspy import pd
-    # read parameters from the command line
-    _, paramfile, infile, outfile = sys.argv
-    df = pd.read_perseus(infile)
-    df2 = 1 / df.drop('Name', 1)
-    df2.to_perseus(outfile)
+    from perseuspy.parameters import *
+    _, paramfile, infile, outfile = sys.argv # read arguments from the command line
+    parameters = parse_parameters(paramfile) # parse the parameters file
+    df = pd.read_perseus(infile) # read the input matrix into a pandas.DataFrame
+    some_value = doubleParam(parameters, 'some value') # extract a parameter value
+    df2 = some_value / df.drop('Name', 1)
+    df2.to_perseus(outfile) # write pandas.DataFrame in Perseus txt format

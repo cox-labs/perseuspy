@@ -1,4 +1,4 @@
-from unittest import TestCase
+from unittest import TestCase, main
 from os import path
 from io import StringIO
 from perseuspy import pd
@@ -41,3 +41,6 @@ class TestReading(TestCase):
         df = pd.DataFrame({'a' : [2,3], 'b': [1,2], 'c': ['a','b'], 'd': [3,4]})
         self.assertEqual('#!{Type}E\tE\tT\tN', type_row(df))
         self.assertEqual('#!{Type}N\tE\tT\tE', type_row(df, main_columns={'b','d'}))
+
+if __name__ == '__main__':
+    main()
