@@ -68,6 +68,8 @@ def read_perseus(path_or_file, type_map = perseus_to_dtype, **kwargs):
     """
     annotations = read_annotations(path_or_file, separator, type_map)
     column_index = create_column_index(annotations)
+    if 'usecols' in kwargs:
+	    column_index = column_index[kwargs['usecols']]
     if 'Type' in annotations:
         dtype = {name : t for name, t in zip(annotations['Column Name'], annotations['Type'])}
         if 'dtype' in kwargs:
