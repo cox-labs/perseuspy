@@ -1,10 +1,12 @@
 perseuspy README
-===============
+================
+
+.. sphinx-inclusion-marker-do-not-remove
 
 .. image:: https://travis-ci.org/jdrudolph/perseuspy.svg?branch=master
     :target: https://travis-ci.org/jdrudolph/perseuspy
 
-Utility and covenience functions for Perseus-python interop.
+Utility and covenience functions for Python-Perseus interop.
 Building on the `pandas` package. If you intend to develop
 a plugin for Perseus, please see `PluginInterop <https://www.github.com/jdrudolph/PluginInterop/>`_.
 
@@ -46,3 +48,7 @@ for python scripting in Perseus.
     some_value = doubleParam(parameters, 'some value') # extract a parameter value
     df2 = some_value / df.drop('Name', 1)
     df2.to_perseus(outfile) # write pandas.DataFrame in Perseus txt format
+
+Generating the documentation
+----------------------------
+Run `./generate_docs.sh` from `bash`.
