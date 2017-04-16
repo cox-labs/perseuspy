@@ -1,6 +1,10 @@
 perseuspy README
 ================
 
+.. image:: https://readthedocs.org/projects/perseuspy/badge/?version=latest
+    :target: http://perseuspy.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
 .. sphinx-inclusion-marker-do-not-remove
 
 .. image:: https://travis-ci.org/jdrudolph/perseuspy.svg?branch=master
