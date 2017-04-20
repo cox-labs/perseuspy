@@ -1,0 +1,6 @@
+GUID	Name
+#!{Description}unique network Id	Name of the network
+#!{Type}T	T
+8dd8865d-e8d7-40c9-bccf-db23b2a381e5	Complete
+d726a22f-1e41-4b4c-83f5-05707bea54b1	Random
+6419df15-c03b-4354-9949-08f7bcb06df9	Poem

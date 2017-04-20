@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Parameters>
+  <ParameterGroup Name="specific" CollapsedDefault="false">
+    <FileParam Type="BaseLibS.Param.FileParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Script file">
+      <Value>C:\Users\...</Value>
+    </FileParam>
+  </ParameterGroup>
+  <ParameterGroup Name="generic" CollapsedDefault="false">
+    <FileParam Type="BaseLibS.Param.FileParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Executable">
+      <Value>C:\Users\...</Value>
+    </FileParam>
+  </ParameterGroup>
+</Parameters>
