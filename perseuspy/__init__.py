@@ -8,6 +8,7 @@ Currently there is no support for the following Perseus matrix features:
 import perseuspy.dependent_peptides
 import perseuspy.io
 from perseuspy.io.perseus import to_perseus, read_perseus
+from perseuspy.io.perseusNetwork import readNetworks, writeNetworks
 # Monkey-patching pandas
 import pandas as pd
 pd.DataFrame.to_perseus = to_perseus
