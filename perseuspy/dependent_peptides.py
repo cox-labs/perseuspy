@@ -91,8 +91,3 @@ def run_dependent_peptides(paramfile, outfile):
     dep = _set_column_names(_dep, exp).reset_index()
     main_columns = list(_dep.columns)
     dep.to_perseus(outfile, main_columns=main_columns)
-
-if __name__ == '__main__':
-    import sys
-    _, paramfile, outfile = sys.argv
-    run_depentent_peptides(paramfile, outfile)
