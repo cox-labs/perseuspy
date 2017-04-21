@@ -40,7 +40,7 @@ def readNetworks( pathInFolder ):
 
 def writeNetworks( pathOutFolder , listAllDicts):
 	"Writing networkTable, networkNodes and networkEdges in Perseus readable format"
-	listAllDicts[0].to_perseus(os.path.join(pathOutFolder+"networks.txt"))
+	listAllDicts[0].to_perseus(os.path.join(pathOutFolder, "networks.txt"))
 	for key in listAllDicts[1]:
 		listAllDicts[1][key].to_perseus(os.path.join(pathOutFolder, key+"_nodes.txt"))
 	for key in listAllDicts[2]:

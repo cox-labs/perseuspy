@@ -1,0 +1,5 @@
+GUID	Name	Number_of_Nodes	Number_of_Edges	Diameter	Density
+#!{Type}T	T	N	N	N	N
+8dd8865d-e8d7-40c9-bccf-db23b2a381e5	Complete	10.0	100.0		1.1111111111111112
+d726a22f-1e41-4b4c-83f5-05707bea54b1	Random	100.0	150.0		0.015151515151515152
+6419df15-c03b-4354-9949-08f7bcb06df9	Poem	15.0	20.0		0.09523809523809523
