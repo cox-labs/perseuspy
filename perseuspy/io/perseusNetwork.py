@@ -2,7 +2,7 @@ import sys
 import os
 import networkx as nx
 import collections
-from perseuspy import pd
+from perseuspy import pd # ugly -> change this to internal call
 # Since Python 3 not needed anymore : 'from itertools import izip'
 
 '''Note: The whole data structure for networks is represented via the list of the 5 following objects: 
