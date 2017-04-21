@@ -20,7 +20,10 @@ class Tests(unittest.TestCase):
 	def test_writing(self):
 		outDir = os.path.join(DIR, "exampleNetworks", "outDirectory")
 		dictlist = readNetworks(os.path.join(DIR, "exampleNetworks", "networkFiles"))
+		print (os.path.join(DIR, "exampleNetworks", "networkFiles"))
 		writeNetworks(outDir, dictlist)
+		print (len(dictlist[4])*2+1+1)
+		print (len([name for name in os.listdir(outDir) if os.path.isfile(os.path.join(outDir, name))]))
 		self.assertTrue(len(dictlist[4])*2+1+1 == len([name for name in os.listdir(outDir) if os.path.isfile(os.path.join(outDir, name))])) # check number of created files, +1(networks.txt), +1(dummy file)
 
 if __name__ == '__main__':
