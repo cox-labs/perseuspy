@@ -40,13 +40,12 @@ def readNetworks( pathInFolder ):
 	
 
 def writeNetworks( pathOutFolder , listAllDicts):
-	"Writing networkTable, networkNodes and networkEdges to outFolder"
-	outFolder = pathOutFolder
-	listAllDicts[0].to_perseus(outFolder+"\\networks.txt")
+	"Writing networkTable, networkNodes and networkEdges in Perseus readable format"
+	listAllDicts[0].to_perseus(pathOutFolder+"\\networks.txt")
 	for key in listAllDicts[1]:
-		listAllDicts[1][key].to_perseus(outFolder+"\\"+key+"_nodes.txt")
+		listAllDicts[1][key].to_perseus(pathOutFolder+"\\"+key+"_nodes.txt")
 	for key in listAllDicts[2]:
-		listAllDicts[2][key].to_perseus(outFolder+"\\"+key+"_edges.txt")		
+		listAllDicts[2][key].to_perseus(pathOutFolder+"\\"+key+"_edges.txt")		
 
 		
 def printNetworkNames( networkTable ):
