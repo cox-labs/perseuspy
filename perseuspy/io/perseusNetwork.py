@@ -17,7 +17,7 @@ from perseuspy import pd # ugly -> change this to internal call
 def readNetworks( pathInFolder ):
 	"Translating networks and corresponding node-/ and edgeTables to graphs"
 	inFolder = pathInFolder
-	networkTable = pd.read_perseus(inFolder+"\\networks.txt")
+	networkTable = pd.read_perseus(inFolder+"/networks.txt")
 	networkNodes = collections.OrderedDict()
 	networkEdges = collections.OrderedDict()
 	networkNameGUID = collections.OrderedDict()
@@ -25,8 +25,8 @@ def readNetworks( pathInFolder ):
 
 	for Name, GUID in zip(networkTable.Name, networkTable.GUID):
 		G=nx.DiGraph() #directed graphs
-		nodeTable = pd.read_perseus(inFolder+"\\"+GUID+"_nodes.txt")
-		edgeTable = pd.read_perseus(inFolder+"\\"+GUID+"_edges.txt")
+		nodeTable = pd.read_perseus(inFolder+"/"+GUID+"_nodes.txt")
+		edgeTable = pd.read_perseus(inFolder+"/"+GUID+"_edges.txt")
 		networkNodes[GUID] = nodeTable
 		networkEdges[GUID] = edgeTable
 		networkNameGUID[Name] = GUID
@@ -41,11 +41,11 @@ def readNetworks( pathInFolder ):
 
 def writeNetworks( pathOutFolder , listAllDicts):
 	"Writing networkTable, networkNodes and networkEdges in Perseus readable format"
-	listAllDicts[0].to_perseus(pathOutFolder+"\\networks.txt")
+	listAllDicts[0].to_perseus(pathOutFolder+"/networks.txt")
 	for key in listAllDicts[1]:
-		listAllDicts[1][key].to_perseus(pathOutFolder+"\\"+key+"_nodes.txt")
+		listAllDicts[1][key].to_perseus(pathOutFolder+"/"+key+"_nodes.txt")
 	for key in listAllDicts[2]:
-		listAllDicts[2][key].to_perseus(pathOutFolder+"\\"+key+"_edges.txt")		
+		listAllDicts[2][key].to_perseus(pathOutFolder+"/"+key+"_edges.txt")		
 
 		
 def printNetworkNames( networkTable ):
