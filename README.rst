@@ -52,6 +52,22 @@ for python scripting in Perseus.
     some_value = doubleParam(parameters, 'some value') # extract a parameter value
     df2 = some_value / df.drop('Name', 1)
     df2.to_perseus(outfile) # write pandas.DataFrame in Perseus txt format
+    
+Network Plugin template
+---------------
+The following snippet can be used as a starting point
+for python scripting in Perseus (for networks).
+
+.. code:: python
+
+    import sys
+    import networkx as nx
+    from perseuspy import pd
+    from perseuspy import readNetworks, writeNetworks
+    allDicts = readNetworks(sys.argv[2]) # read networks from perseus created files
+    newAllDicts = allDicts
+    writeNetworks(sys.argv[3], newAllDicts) # write networks from newallDicts
+
 
 Generating the documentation
 ----------------------------
