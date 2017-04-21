@@ -1,0 +1,1 @@
+Necessary for Git so that this folder can exist (almost) empty
