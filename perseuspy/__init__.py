@@ -12,5 +12,5 @@ from perseuspy.io.perseus import to_perseus, read_perseus
 import pandas as pd
 pd.DataFrame.to_perseus = to_perseus
 pd.read_perseus = read_perseus
-from perseuspy.io.perseusNetwork import readNetworks, writeNetworks
+from perseuspy.io.perseusNetwork import read_networks, write_networks
 
