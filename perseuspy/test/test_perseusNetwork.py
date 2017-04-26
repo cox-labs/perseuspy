@@ -9,7 +9,6 @@ from perseusNetwork import read_networks, _write_table
 inFolder = path.join(path.dirname(__file__), "exampleNetworks", "networkFiles")
 
 class Tests(TestCase):
-	"""Tests for perseusNetwork.py"""
 	def test_reading(self):
 		allDicts = read_networks(inFolder)
 		self.assertTrue(not allDicts[0].empty and any(allDicts[1]) and any(allDicts[2]) and any(allDicts[3]) and any(allDicts[4]))
