@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Python-Perseus interop using perseuspy &#8212; perseuspy 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="python-perseus-interop-using-perseuspy">
+<h1>Python-Perseus interop using perseuspy<a class="headerlink" href="#python-perseus-interop-using-perseuspy" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<a class="reference external image-reference" href="https://travis-ci.org/jdrudolph/perseuspy"><img alt="https://travis-ci.org/jdrudolph/perseuspy.svg?branch=master" src="https://travis-ci.org/jdrudolph/perseuspy.svg?branch=master" /></a>
+<p>Utility and covenience functions for Python-Perseus interop.
+Building on the <cite>pandas</cite> package. If you intend to develop
+a plugin for Perseus, please see <a class="reference external" href="https://www.github.com/jdrudolph/PluginInterop/">PluginInterop</a>.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Install using pip directly from <cite>github</cite>:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">jdrudolph</span><span class="o">/</span><span class="n">perseuspy</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>You can use <cite>perseuspy</cite> just like any other python module.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># import a monkey-patched version of pandas</span>
+<span class="kn">from</span> <span class="nn">perseuspy</span> <span class="k">import</span> <span class="n">pd</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_perseus</span><span class="p">(</span><span class="s1">&#39;matrix1.txt&#39;</span><span class="p">)</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">to_perseus</span><span class="p">(</span><span class="s1">&#39;matrix2.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="plugin-template">
+<h2>Plugin template<a class="headerlink" href="#plugin-template" title="Permalink to this headline">¶</a></h2>
+<p>The following snippet can be used as a starting point
+for python scripting in Perseus.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">perseuspy</span> <span class="k">import</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="nn">perseuspy.parameters</span> <span class="k">import</span> <span class="o">*</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">paramfile</span><span class="p">,</span> <span class="n">infile</span><span class="p">,</span> <span class="n">outfile</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="c1"># read arguments from the command line</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="n">parse_parameters</span><span class="p">(</span><span class="n">paramfile</span><span class="p">)</span> <span class="c1"># parse the parameters file</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_perseus</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span> <span class="c1"># read the input matrix into a pandas.DataFrame</span>
+<span class="n">some_value</span> <span class="o">=</span> <span class="n">doubleParam</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="s1">&#39;some value&#39;</span><span class="p">)</span> <span class="c1"># extract a parameter value</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">some_value</span> <span class="o">/</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">to_perseus</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span> <span class="c1"># write pandas.DataFrame in Perseus txt format</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="network-plugin-template">
+<h2>Network Plugin template<a class="headerlink" href="#network-plugin-template" title="Permalink to this headline">¶</a></h2>
+<p>The following snippet can be used as a starting point
+for python scripting in Perseus (for networks).</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">from</span> <span class="nn">perseuspy</span> <span class="k">import</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="nn">perseuspy</span> <span class="k">import</span> <span class="n">readNetworks</span><span class="p">,</span> <span class="n">writeNetworks</span>
+<span class="n">allDicts</span> <span class="o">=</span> <span class="n">readNetworks</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="c1"># read networks from perseus created files</span>
+<span class="n">newAllDicts</span> <span class="o">=</span> <span class="n">allDicts</span>
+<span class="n">writeNetworks</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">newAllDicts</span><span class="p">)</span> <span class="c1"># write networks from newallDicts</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="generating-the-documentation">
+<h2>Generating the documentation<a class="headerlink" href="#generating-the-documentation" title="Permalink to this headline">¶</a></h2>
+<p>Run <cite>./generate_docs.sh</cite> from <cite>bash</cite>.</p>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Python-Perseus interop using perseuspy</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#plugin-template">Plugin template</a></li>
+<li><a class="reference internal" href="#network-plugin-template">Network Plugin template</a></li>
+<li><a class="reference internal" href="#generating-the-documentation">Generating the documentation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Jan Rudolph.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
