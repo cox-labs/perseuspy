@@ -99,6 +99,6 @@ def run_dependent_peptides(allPeptides_file, experimentalDesign_file, outfile):
     exp = read_experimentalDesign(experimentalDesign_file)
     _dep = _set_column_names(__dep, exp)
     main_columns = list(_dep.columns)
-    dep = _dep.reset_index()
+    dep = _dep.join(localization).reset_index()
     dep.to_perseus(outfile, main_columns=main_columns)
 
