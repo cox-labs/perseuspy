@@ -24,7 +24,10 @@ outfile = StringIO()
 
 class TestDependentPeptides(TestCase):
 
-    def test_running_dependent_peptides(self):
-        run_dependent_peptides(paramfile, outfile)
+    def test_running_dependent_peptides_from_parameters(self):
+        run_dependent_peptides_from_parameters(paramfile, outfile)
         outfile.seek(0)
-        self.assertEqual(687, len(outfile.readlines()))
+        lines = outfile.readlines()
+        types = lines[1]
+        self.assertIn('E', types.strip().replace('#!{Type}', '').split('\t'))
+        self.assertEqual(687, len(lines))

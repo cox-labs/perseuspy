@@ -76,18 +76,29 @@ def _frequent_localizations(df):
         result['DP AA'] = ';'.join(sorted(max_aa))
     return pd.Series(result)
 
-def run_dependent_peptides(paramfile, outfile):
+def run_dependent_peptides_from_parameters(paramfile, outfile):
     """ transform a allPeptides.txt and experimentalDesign.txt table
     into the dependentPeptides.txt table written in outfile.
     :param paramfile: Perseus parameters.xml including at least two FileParam
     entries names 'allPeptides.txt' and 'experimentalDesign.txt'.
-    :param outfile: Path to the output file
+    :param outfile: Path to the output file.
     """
     parameters = parse_parameters(paramfile)
     allPeptides_file = fileParam(parameters, 'allPeptides.txt')
     experimentalDesign_file = fileParam(parameters, 'experimentalDesign.txt')
-    _dep, localization = read_dependent_peptides(allPeptides_file)
+    run_dependent_peptides(allPeptides_file, experimentalDesign_file, outfile)
+
+def run_dependent_peptides(allPeptides_file, experimentalDesign_file, outfile):
+    """ transform a allPeptides.txt and experimentalDesign.txt table
+    into the dependentPeptides.txt table written in outfile.
+    :param allPeptides_file: MaxQuant 'allPeptides.txt' output table.
+    :param experimentalDesign_file: MaxQuant 'experimentalDesign.txt' table.
+    :param outfile: Path to the output file.
+    """
+    __dep, localization = read_dependent_peptides(allPeptides_file)
     exp = read_experimentalDesign(experimentalDesign_file)
-    dep = _set_column_names(_dep, exp).reset_index()
+    _dep = _set_column_names(__dep, exp)
     main_columns = list(_dep.columns)
+    dep = _dep.reset_index()
     dep.to_perseus(outfile, main_columns=main_columns)
+
