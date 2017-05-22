@@ -54,3 +54,18 @@ def singleChoiceParam(parameters, name, type_converter = str):
     value = int(param.find('Value').text)
     values = param.find('Values')
     return type_converter(values[value].text)
+
+def multiChoiceParam(parameters, name, type_converter = str):
+    """ multi choice parameter values.
+    :param parameters: the parameters tree.
+    :param name: the name of the parameter.
+    :param type_converter: function to convert the chosen value to a different type (e.g. str, float, int). default = 'str'
+	:returns dictionary: value -> values
+    """
+    param = parameters.find(".//MultiChoiceParam[@Name='{name}']".format(name=name))
+    value = param.find('Value')
+    values = param.find('Values')
+    multiparam = {}
+    for item in value.findall('Item'):
+        multiparam[int(item.text)] = type_converter(values[int(item.text)].text)
+    return multiparam
