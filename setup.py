@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(name='perseuspy',
         version='0.1',
@@ -7,7 +7,7 @@ setup(name='perseuspy',
         author='Jan Rudolph',
         author_email='jan.daniel.rudolph@gmail.com',
         license='MIT',
-        packages=['perseuspy'],
+        packages=find_packages(),
         install_requires=['pandas >= 0.19'],
         test_suite = 'nose.collector',
         test_require= ['nose']
