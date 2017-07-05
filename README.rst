@@ -22,6 +22,8 @@ Install using pip directly from `github`:
 
     pip install git+https://github.com/jdrudolph/perseuspy.git
 
+The installation of `perseuspy` will fail if `git` is not `installed <https://git-scm.com/downloads>`_.
+
 Usage
 ------------
 You can use `perseuspy` just like any other python module.
