@@ -16,13 +16,13 @@ a plugin for Perseus, please see `PluginInterop <https://www.github.com/jdrudolp
 
 Installation
 ------------
-Install using pip directly from `github`:
+The installation of `perseuspy` requires `git <https://git-scm.com/downloads>`_.
+Then install using pip directly from `github`:
 
 .. code:: bash
 
     pip install git+https://github.com/jdrudolph/perseuspy.git
 
-The installation of `perseuspy` will fail if `git` is not `installed <https://git-scm.com/downloads>`_.
 
 Usage
 ------------
