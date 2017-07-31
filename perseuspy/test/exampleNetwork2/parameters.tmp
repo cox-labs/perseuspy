@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Parameters>
+  <ParameterGroup Name="" CollapsedDefault="false">
+    <MultiChoiceParam Type="BaseLibS.Param.MultiChoiceParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Properties" Repeats="false">
+      <Value>
+        <Item>0</Item>
+        <Item>1</Item>
+        <Item>2</Item>
+        <Item>3</Item>
+        <Item>4</Item>
+        <Item>5</Item>
+		<Item>6</Item>
+		<Item>7</Item>
+        <Item>8</Item>
+		<Item>9</Item>
+		<Item>10</Item>
+		<Item>11</Item>
+		<Item>12</Item>
+		<Item>13</Item>
+		<Item>14</Item>
+      </Value>
+      <Values>
+        <Item>Network 	 Number of Nodes</Item>
+        <Item>Network 	 Number of Edges</Item>
+        <Item>Network 	 Density</Item>
+		<Item>Network 	 Average node connectivity</Item>
+		<Item>Network 	 Node connectivity</Item>
+		<Item>Network 	 Edge connectivity</Item>
+		<Item>Network 	 Diameter</Item>
+		<Item>Network 	 Radius</Item>
+        <Item>Node 	 Degree</Item>
+        <Item>Node 	 Degree centrality</Item>
+        <Item>Node 	 Closeness centrality</Item>
+        <Item>Node 	 Betweenness centrality</Item>
+        <Item>Node 	 Average neighbor degree</Item>
+		<Item>Node 	 Clustering coefficient</Item>
+        <Item>Edge 	 Betweenness centrality</Item>
+      </Values>
+    </MultiChoiceParam>
+  </ParameterGroup>
+  <ParameterGroup Name="" CollapsedDefault="false">
+    <SingleChoiceParam Type="BaseLibS.Param.SingleChoiceParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Graph type">
+      <Value>1</Value>
+      <Values>
+        <Item>Directed</Item>
+        <Item>Undirected</Item>
+      </Values>
+    </SingleChoiceParam>
+  </ParameterGroup>
+  <ParameterGroup Name="specific" CollapsedDefault="false">
+    <FileParam Type="BaseLibS.Param.FileParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Script file">
+      <Value>C:\Users\ldeininger\Desktop\calcNetworkProperties.py</Value>
+    </FileParam>
+  </ParameterGroup>
+  <ParameterGroup Name="generic" CollapsedDefault="false">
+    <FileParam Type="BaseLibS.Param.FileParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Executable">
+      <Value>C:\Users\ldeininger\AppData\Local\Programs\Python\Python36-32\python.exe</Value>
+    </FileParam>
+  </ParameterGroup>
+</Parameters>
