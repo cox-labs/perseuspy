@@ -14,15 +14,59 @@ Utility and covenience functions for Python-Perseus interop.
 Building on the `pandas` package. If you intend to develop
 a plugin for Perseus, please see `PluginInterop <https://www.github.com/jdrudolph/PluginInterop/>`_.
 
-Installation
-------------
-The installation of `perseuspy` requires `git <https://git-scm.com/downloads>`_.
-Then install using pip directly from `github`:
+Installation (short)
+--------------------
 
 .. code:: bash
 
     pip install git+https://github.com/jdrudolph/perseuspy.git
 
+Installation (Windows long)
+---------------------------
+First open a terminal by searching for `cmd.exe` in the start menu. Here we can easily
+check if all required programs are installed.
+
+#. We can check if `git` is installed by typing
+   ::
+        
+        git --version
+        
+   If the command returns an error, go ahead and install `git <https://git-scm.com/downloads>`_.
+   Make sure to select 'Add `git` to `PATH`' during the installation. Now rerunning the
+   command above should output the installed version of git.
+#. Navigate to the installation directory of your `Python` installation. If it is installed
+   e.g. `D:/Programs/Python/` we would first change the drive letter (maybe unnecessary)
+   and then go to the installation directory.
+   ::
+
+       D:
+       cd Programs/Python
+
+   Now we should be able to run `python` from the command line.
+   ::
+       
+       python.exe --version
+
+   This should print the installed version of python
+#. Navigate to the `Scripts` directory and run the installation
+   ::
+
+       cd Scripts
+       pip install git+https://github.com/jdrudolph/perseuspy.git
+#. Test the installation by navigating back to the `Python` folder and trying to import `perseuspy`.
+   ::
+
+       cd ..
+       python.exe
+
+   Now you should be inside the `python` interpreter. Check the installation by running.
+   ::
+
+       import perseuspy
+
+   If the command doesn't produce any error you can exit `python` by pressing `CTRL+c`.
+#. Add `python` to your `PATH` (optional). Makes it easier for Perseus to find the Python
+   installation. There are many resources on how to add programs to the `PATH` available online.
 
 Usage
 ------------
