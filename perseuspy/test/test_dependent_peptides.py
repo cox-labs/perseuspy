@@ -13,12 +13,12 @@ paramfile = StringIO("""
       <FileParam Type="BaseLibS.Param.FileParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="allPeptides.txt">
 	<Value>{allPeptides}</Value>
       </FileParam>
-      <FileParam Type="BaseLibS.Param.FileParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="experimentalDesign.txt">
-	<Value>{experimentalDesign}</Value>
+      <FileParam Type="BaseLibS.Param.FileParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Raw files table">
+	<Value>{rawFilesTable}</Value>
       </FileParam>
     </ParameterGroup>
   </Parameters>
-""".format(allPeptides=path.join(TEST_DIR, 'allPeptides.txt.sample'), experimentalDesign=path.join(TEST_DIR, 'experimentalDesign.txt.sample')))
+""".format(allPeptides=path.join(TEST_DIR, 'allPeptides.txt.sample'), rawFilesTable=path.join(TEST_DIR, 'rawFilesTable.txt.sample')))
 
 outfile = StringIO()
 

@@ -7,7 +7,7 @@ This code forms the basis for the corresponding Perseus plugin PluginDependentPe
 import pandas as pd
 from perseuspy.io.perseus import read_perseus
 pd.read_perseus = read_perseus
-from perseuspy.io.maxquant import read_experimentalDesign
+from perseuspy.io.maxquant import read_rawFilesTable
 from perseuspy.parameters import fileParam, parse_parameters
 import numpy as np
 
@@ -85,18 +85,18 @@ def run_dependent_peptides_from_parameters(paramfile, outfile):
     """
     parameters = parse_parameters(paramfile)
     allPeptides_file = fileParam(parameters, 'allPeptides.txt')
-    experimentalDesign_file = fileParam(parameters, 'experimentalDesign.txt')
-    run_dependent_peptides(allPeptides_file, experimentalDesign_file, outfile)
+    rawFilesTable_file = fileParam(parameters, 'Raw files table')
+    run_dependent_peptides(allPeptides_file, rawFilesTable_file, outfile)
 
-def run_dependent_peptides(allPeptides_file, experimentalDesign_file, outfile):
+def run_dependent_peptides(allPeptides_file, rawFilesTable_file, outfile):
     """ transform a allPeptides.txt and experimentalDesign.txt table
     into the dependentPeptides.txt table written in outfile.
     :param allPeptides_file: MaxQuant 'allPeptides.txt' output table.
-    :param experimentalDesign_file: MaxQuant 'experimentalDesign.txt' table.
+    :param rawFilesTable_file: MaxQuant 'Raw files'-tab table.
     :param outfile: Path to the output file.
     """
     __dep, localization = read_dependent_peptides(allPeptides_file)
-    exp = read_experimentalDesign(experimentalDesign_file)
+    exp = read_rawFilesTable(rawFilesTable_file)
     _dep = _set_column_names(__dep, exp)
     main_columns = list(_dep.columns)
     dep = _dep.join(localization).reset_index()
