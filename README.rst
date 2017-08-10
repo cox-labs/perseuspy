@@ -58,6 +58,12 @@ check if all required programs are installed.
 
        cd Scripts
        pip install perseuspy
+
+   If you want to upgrade you installation, run
+   ::
+
+       pip install --upgrade perseuspy
+
 #. Test the installation by navigating back to the `Python` folder and trying to import `perseuspy`.
    ::
 
@@ -72,8 +78,6 @@ check if all required programs are installed.
    If the command doesn't produce any error you can exit `python` by pressing `CTRL+c`.
 #. Add `python` to your `PATH` (optional). Makes it easier for Perseus to find the Python
    installation. There are many resources on how to add programs to the `PATH` available online.
-#. To update you installation to the latest version of `perseuspy` simply add `--upgrade` to the
-   installation command: `pip install --upgrade perseuspy`.
 
 Usage
 ------------
