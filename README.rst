@@ -33,14 +33,12 @@ Installation (Windows long)
 First open a terminal by searching for `cmd.exe` in the start menu. Here we can easily
 check if all required programs are installed.
 
-#. We can check if `git` is installed by typing
+#. Check to see if the `pip` executable is already available.
    ::
-        
-        git --version
-        
-   If the command returns an error, go ahead and install `git <https://git-scm.com/downloads>`_.
-   Make sure to select 'Add `git` to `PATH`' during the installation. Now rerunning the
-   command above should output the installed version of git.
+
+      pip install perseuspy
+
+   If there is no error you are already done. If it fails, continue with the next steps.
 #. Navigate to the installation directory of your `Python` installation. If it is installed
    e.g. `D:/Programs/Python/` we would first change the drive letter (maybe unnecessary)
    and then go to the installation directory.
@@ -59,7 +57,7 @@ check if all required programs are installed.
    ::
 
        cd Scripts
-       pip install git+https://github.com/jdrudolph/perseuspy.git
+       pip install perseuspy
 #. Test the installation by navigating back to the `Python` folder and trying to import `perseuspy`.
    ::
 
@@ -74,6 +72,8 @@ check if all required programs are installed.
    If the command doesn't produce any error you can exit `python` by pressing `CTRL+c`.
 #. Add `python` to your `PATH` (optional). Makes it easier for Perseus to find the Python
    installation. There are many resources on how to add programs to the `PATH` available online.
+#. To update you installation to the latest version of `perseuspy` simply add `--upgrade` to the
+   installation command: `pip install --upgrade perseuspy`.
 
 Usage
 ------------
