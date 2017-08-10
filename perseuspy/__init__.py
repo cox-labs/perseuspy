@@ -13,3 +13,4 @@ import pandas as pd
 pd.DataFrame.to_perseus = to_perseus
 pd.read_perseus = read_perseus
 
+__version__ = '0.1.2'

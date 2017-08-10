@@ -1,6 +1,7 @@
 from unittest import TestCase
 from os import path
 from perseuspy.dependent_peptides import *
+import perseuspy.io.maxquant as mqio
 from perseuspy.parameters import *
 from io import StringIO
 
@@ -23,6 +24,14 @@ paramfile = StringIO("""
 outfile = StringIO()
 
 class TestDependentPeptides(TestCase):
+
+    def test_reading_raw_files_table(self):
+        df = mqio.read_rawFilesTable(path.join(TEST_DIR, 'rawFilesTable.txt.sample'))        
+        self.assertEqual(8, len(df.columns))
+
+    def test_reading_raw_files_table_should_fail_on_experimental_design_table(self):
+        with self.assertRaises(ValueError):
+            df = mqio.read_rawFilesTable(path.join(TEST_DIR, 'experimentalDesignTemplate.txt.sample'))
 
     def test_running_dependent_peptides_from_parameters(self):
         run_dependent_peptides_from_parameters(paramfile, outfile)

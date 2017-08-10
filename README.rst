@@ -19,7 +19,14 @@ Installation (short)
 
 .. code:: bash
 
-    pip install git+https://github.com/jdrudolph/perseuspy.git
+    pip install perseuspy
+
+Updating to the latest version
+------------------------------
+
+.. code:: bash
+
+    pip install --upgrade perseuspy
 
 Installation (Windows long)
 ---------------------------

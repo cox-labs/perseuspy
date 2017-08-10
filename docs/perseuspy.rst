@@ -12,16 +12,16 @@ Subpackages
 Submodules
 ----------
 
-perseuspy.dependent_peptides module
------------------------------------
+perseuspy\.dependent\_peptides module
+-------------------------------------
 
 .. automodule:: perseuspy.dependent_peptides
     :members:
     :undoc-members:
     :show-inheritance:
 
-perseuspy.parameters module
----------------------------
+perseuspy\.parameters module
+----------------------------
 
 .. automodule:: perseuspy.parameters
     :members:
