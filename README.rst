@@ -113,3 +113,7 @@ for python scripting in Perseus.
 Generating the documentation
 ----------------------------
 Run `./generate_docs.sh` from `bash`.
+
+Licensing and Contributions
+---------------------------
+`perseuspy` is licensed under the MIT lisence. Contributions are welcome!
