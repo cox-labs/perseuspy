@@ -46,11 +46,13 @@ def doubleParam(parameters, name):
     return float(_simple_string_value(parameters, 'DoubleParam', name))
 
 def singleChoiceParam(parameters, name, type_converter = str):
-    """ single choice parameter value.
+    """ single choice parameter value. Returns -1 if no value was chosen.
     :param parameters: the parameters tree.
     :param name: the name of the parameter.
     :param type_converter: function to convert the chosen value to a different type (e.g. str, float, int). default = 'str'"""
     param = parameters.find(".//SingleChoiceParam[@Name='{name}']".format(name=name))
     value = int(param.find('Value').text)
     values = param.find('Values')
+    if value < 0:
+        return value
     return type_converter(values[value].text)

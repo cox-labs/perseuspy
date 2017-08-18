@@ -12,6 +12,9 @@ class TestParameters(TestCase):
     def test_int_param(self):
         self.assertEqual(15, intParam(self.parameters, 'Number of columns'))
 
+    def test_int_param2(self):
+        self.assertEqual(-15, intParam(self.parameters, 'Test int param'))
+
     def test_double_param(self):
         self.assertEqual(2.0, doubleParam(self.parameters, 'Box size'))
 
@@ -20,6 +23,9 @@ class TestParameters(TestCase):
 
     def test_single_choice_param(self):
         self.assertEqual('Two normal distributions', singleChoiceParam(self.parameters, 'Mode'))
+
+    def test_single_choice_param_no_value_chosen(self):
+        self.assertEqual(-1, singleChoiceParam(self.parameters, 'Test'))
 
 if __name__ == '__main__':
     main()

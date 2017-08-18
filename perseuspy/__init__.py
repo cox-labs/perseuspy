@@ -5,7 +5,7 @@ Currently there is no support for the following Perseus matrix features:
  - numerical annotation rows
  - multi-numeric rows
 """
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 try:
     import perseuspy.dependent_peptides
     import perseuspy.io
