@@ -7,29 +7,28 @@
         <Item>1</Item>
         <Item>2</Item>
         <Item>3</Item>
-        <Item>4</Item>
-        <Item>5</Item>
-		<Item>6</Item>
-		<Item>7</Item>
-        <Item>8</Item>
-		<Item>9</Item>
-		<Item>10</Item>
+		<Item>4</Item>
+		<Item>5</Item>
+        <Item>6</Item>
+		<Item>8</Item>
 		<Item>11</Item>
 		<Item>12</Item>
 		<Item>13</Item>
 		<Item>14</Item>
+		<Item>15</Item>
       </Value>
       <Values>
-        <Item>Network 	 Number of Nodes</Item>
-        <Item>Network 	 Number of Edges</Item>
         <Item>Network 	 Density</Item>
 		<Item>Network 	 Average node connectivity</Item>
 		<Item>Network 	 Node connectivity</Item>
 		<Item>Network 	 Edge connectivity</Item>
 		<Item>Network 	 Diameter</Item>
 		<Item>Network 	 Radius</Item>
-        <Item>Node 	 Degree</Item>
-        <Item>Node 	 Degree centrality</Item>
+		<Item>Node 	 Degree</Item>
+		<Item>Node 	 Out-degree</Item>
+		<Item>Node 	 Degree centrality</Item>
+		<Item>Node 	 In-degree centrality</Item>
+        <Item>Node 	 Out-degree centrality</Item>
         <Item>Node 	 Closeness centrality</Item>
         <Item>Node 	 Betweenness centrality</Item>
         <Item>Node 	 Average neighbor degree</Item>
