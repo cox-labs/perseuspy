@@ -1,0 +1,6 @@
+Nodes	Edges	GUID	Name
+#!{Description}Number of nodes in the network	Number of edges in the network	unique network Id	Name of the network
+#!{Type}N	N	T	T
+100	150	510afd52-6fe6-4179-b557-20fb08876e8a	Random 0
+100	150	d339e1d2-58b7-4d4e-9c88-8fb1ec1953fb	Random 1
+100	150	998dab4f-e11a-4a35-ada4-9fada81f1f2f	Random 2

@@ -58,7 +58,7 @@ def read_perseus(path_or_file, type_map = perseus_to_dtype, **kwargs):
 
     :param path_or_file: File path or file-like object
     :param type_map: How to map Perseus types to numpy.dtype
-    :param **kwargs: Keyword arguments passed as-is to pandas.read_csv
+    :param kwargs: Keyword arguments passed as-is to pandas.read_csv
     :returns: The parsed data frame
     """
     annotations = read_annotations(path_or_file, separator, type_map)

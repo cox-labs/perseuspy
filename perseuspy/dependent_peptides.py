@@ -5,7 +5,7 @@ and are annotated using the `experimentalDesign.txt`.
 This code forms the basis for the corresponding Perseus plugin PluginDependentPeptides.
 """
 import pandas as pd
-from perseuspy.io.perseus import read_perseus
+from perseuspy.io.perseus.matrix import read_perseus
 pd.read_perseus = read_perseus
 from perseuspy.io.maxquant import read_rawFilesTable
 from perseuspy.parameters import fileParam, parse_parameters
