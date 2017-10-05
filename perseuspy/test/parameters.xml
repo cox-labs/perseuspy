@@ -24,6 +24,48 @@
 	<Value>-1</Value>
 	<Values>
 	</Values>
+    <MultiChoiceParam Type="BaseLibS.Param.MultiChoiceParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Select" Repeats="false">
+      <Value>
+     	<Item>1</Item> 
+     	<Item>2</Item> 
+      </Value>
+      <Values>
+	<Item>S</Item>
+	<Item>T</Item>
+	<Item>Y</Item>
+      </Values>
+    </MultiChoiceParam>
       </SingleChoiceParam>
+    <SingleChoiceWithSubParams Type="BaseLibS.Param.SingleChoiceWithSubParams, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Choose">
+      <Value>1</Value>
+      <Values>
+        <Item>A</Item>
+        <Item>B</Item>
+        <Item>C</Item>
+      </Values>
+      <SubParams>
+        <Parameters>
+          <ParameterGroup Name="" CollapsedDefault="false">
+      <DoubleParam Type="BaseLibS.Param.DoubleParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Sub">
+	<Value>2</Value>
+      </DoubleParam>
+          </ParameterGroup>
+        </Parameters>
+        <Parameters>
+          <ParameterGroup Name="" CollapsedDefault="false">
+      <DoubleParam Type="BaseLibS.Param.DoubleParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Sub">
+	<Value>3</Value>
+      </DoubleParam>
+          </ParameterGroup>
+        </Parameters>
+        <Parameters>
+          <ParameterGroup Name="" CollapsedDefault="false">
+      <DoubleParam Type="BaseLibS.Param.DoubleParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Sub C">
+	<Value>4</Value>
+      </DoubleParam>
+          </ParameterGroup>
+        </Parameters>
+      </SubParams>
+    </SingleChoiceWithSubParams>
     </ParameterGroup>
   </Parameters>

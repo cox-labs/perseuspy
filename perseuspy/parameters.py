@@ -67,7 +67,17 @@ def multiChoiceParam(parameters, name, type_converter = str):
     param = parameters.find(".//MultiChoiceParam[@Name='{name}']".format(name=name))
     value = param.find('Value')
     values = param.find('Values')
-    multiparam = {}
-    for item in value.findall('Item'):
-        multiparam[int(item.text)] = type_converter(values[int(item.text)].text)
-    return multiparam
+    return [type_converter(values[int(item.text)].text) for item in value.findall('Item')]
+
+def singleChoiceWithSubParams(parameters, name, type_converter = str):
+    """ single choice with sub parameters value and chosen subparameters. Returns -1 and None if no value was chosen.
+    :param parameters: the parameters tree.
+    :param name: the name of the parameter.
+    :param type_converter: function to convert the chosen value to a different type (e.g. str, float, int). default = 'str'"""
+    param = parameters.find(".//SingleChoiceWithSubParams[@Name='{name}']".format(name=name))
+    value = int(param.find('Value').text)
+    values = param.find('Values')
+    if value < 0:
+        return value, None
+    return type_converter(values[value].text), param.findall('SubParams/Parameters')[value]
+

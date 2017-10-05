@@ -27,5 +27,13 @@ class TestParameters(TestCase):
     def test_single_choice_param_no_value_chosen(self):
         self.assertEqual(-1, singleChoiceParam(self.parameters, 'Test'))
 
+    def test_multi_choice_param(self):
+        self.assertEqual(['T', 'Y'], multiChoiceParam(self.parameters, 'Select'))
+
+    def test_single_choice_with_subparams(self):
+        value, subparams = singleChoiceWithSubParams(self.parameters, 'Choose')
+        self.assertEqual('B', value)
+        self.assertEqual(3.0, doubleParam(subparams, 'Sub'))
+
 if __name__ == '__main__':
     main()

@@ -1,9 +1,11 @@
-from os import path
+from os import path, makedirs
+import uuid
 import networkx as nx
 from collections import OrderedDict
 from perseuspy.io.perseus.matrix import read_perseus
 import pandas as pd
 import warnings
+
 
 def read_networks(folder):
     """
@@ -55,20 +57,32 @@ def from_perseus(network_table, networks):
     return graphs
 
 def to_perseus(graphs):
+    """
+    Create a network table and the network dictionary for export to Perseus.
+    
+    :param graphs: Collection of networkx graphs
+
+    >>> from perseuspy import nx
+    >>> G = nx.random_graphs.barabasi_albert_graph(10, 3)
+    >>> network_table, networks = nx.to_perseus([G])
+    """
     graph_attributes = []
     networks = {}
     for graph in graphs:
-        graph_attributes.append(graph.graph)
-        guid = graph.graph['GUID']
-        edge_table = pd.DataFrame([data for f,t,data in graph.edges(data=True)])
+        attributes = dict(graph.graph)
+        attributes.update({"Name" : attributes.get("Name", attributes.get("name", "networkx graph")),
+            "GUID": attributes.get("GUID", str(uuid.uuid4()))})
+        graph_attributes.append(attributes)
+        edge_table = pd.DataFrame([dict(data, **{"Source": str(f), "Target": str(t)}) for f,t,data in graph.edges(data=True)])
         edge_table.columns.name = "Column Name"
-        node_table = pd.DataFrame([data for n,data in graph.nodes(data=True)])
+        node_table = pd.DataFrame([dict(data, **{"Node": str(n)}) for n,data in graph.nodes(data=True)])
         node_table.columns.name = "Column Name"
+        guid = attributes['GUID']
         networks[guid] = {
             'edge_table': edge_table,
             'node_table': node_table,
-            'name': graph.graph['Name'],
-            'guid': graph.graph['GUID'] }
+            'name': attributes['Name'],
+            'guid': guid }
     network_table = pd.DataFrame(graph_attributes)
     network_table.columns.name = "Column Name"
     return network_table, networks
@@ -81,6 +95,7 @@ def write_networks(folder, network_table, networks):
     :param network_table: Network table.
     :param networks: Dictionary with node and edge tables, indexed by network guid.
     """
+    makedirs(folder, exist_ok=True) 
     network_table.to_perseus(path.join(folder, 'networks.txt'), main_columns=[])
     for guid, network in networks.items():
         network['node_table'].to_perseus(path.join(folder, '{}_nodes.txt'.format(guid)), main_columns=[])
