@@ -36,6 +36,12 @@ class TestReading(TestCase):
         self.assertIsNot(to_string(df), '')
         self.assertEqual('#!{Type}' + (3 * 'E\t') + 'C',
                 '\t'.join(type_row(df).split('\t')[:4]))
+    
+    def test_reading_multi_numeric_columns(self):
+        df = pd.read_perseus(path.join(TEST_DIR, 'matrix4.txt'))
+        self.assertIsNot(df, None)
+        self.assertEqual([1,2,3], df.values[0][0])
+        self.assertEqual("#!{Type}M", type_row(df))
 
     def test_inferring_and_setting_main_columns(self):
         df = pd.DataFrame({'a' : [2,3], 'b': [1,2], 'c': ['a','b'], 'd': [3,4]})

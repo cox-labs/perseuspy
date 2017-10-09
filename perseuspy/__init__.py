@@ -1,11 +1,7 @@
 """
 perseuspy module for Python-Perseus interop.
-
-Currently there is no support for the following Perseus matrix features:
- - numerical annotation rows
- - multi-numeric rows
 """
-__version__ = '0.2.1'
+__version__ = '0.3.0'
 import perseuspy.dependent_peptides
 import perseuspy.io.perseus.matrix
 # Monkey-patching pandas

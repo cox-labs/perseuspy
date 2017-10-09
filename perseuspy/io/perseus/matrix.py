@@ -3,11 +3,14 @@ import pandas as pd
 from collections import OrderedDict
 
 separator = '\t'
-perseus_to_dtype = {'E' : float, 'T' : str, 'C' : 'category', 'M' : str, 'N' : float}
+def multi_numeric_converter(numbers):
+    return [float(num) for num in numbers.split(';') if num != '']
+converters = {'M': multi_numeric_converter}
+perseus_to_dtype = {'E' : float, 'T' : str, 'C' : 'category', 'N' : float}
 dtype_to_perseus = { np.dtype('float') : 'N', np.dtype('str') : 'T', np.dtype('object') : 'T',
         np.dtype('int64') : 'N', pd.Categorical.dtype : 'C' }
 
-def read_annotations(path_or_file, separator, type_map=perseus_to_dtype, reset=True):
+def read_annotations(path_or_file, separator='\t', reset=True):
     """
     Read all annotations from the specified file.
     
@@ -18,7 +21,6 @@ def read_annotations(path_or_file, separator, type_map=perseus_to_dtype, reset=T
 
     :param path_or_file: Path or file-like object
     :param separator: Column separator
-    :param type_map: Mapping Perseus types to numpy.dtype
     :param reset: Reset the file after reading. Useful for file-like, no-op for paths.
     :returns: Ordered dictionary of annotations.
     """
@@ -32,7 +34,9 @@ def read_annotations(path_or_file, separator, type_map=perseus_to_dtype, reset=T
                 name = _name.replace('#!{', '')
                 values = [first_value] + tokens[1:]
                 if name == 'Type':
-                    values = [type_map[x] for x in values]
+                    colnames = annotations['Column Name']
+                    annotations['dtype'] = {colnames[i]: perseus_to_dtype[x] for i, x in enumerate(values) if x in perseus_to_dtype}
+                    annotations['converters'] = {colnames[i]: converters[x] for i, x in enumerate(values) if x in converters}
                 annotations[name] = values
     return annotations
 
@@ -48,7 +52,7 @@ def create_column_index(annotations):
     column_index = pd.MultiIndex.from_tuples(list(zip(*_column_index.values())), names=list(_column_index.keys()))
     return column_index
 
-def read_perseus(path_or_file, type_map = perseus_to_dtype, **kwargs):
+def read_perseus(path_or_file, **kwargs):
     """
     Read a Perseus-formatted matrix into a pd.DataFrame.
     Annotation rows will be converted into a multi-index.
@@ -57,29 +61,25 @@ def read_perseus(path_or_file, type_map = perseus_to_dtype, **kwargs):
     method for exporting the pd.DataFrame is made available.
 
     :param path_or_file: File path or file-like object
-    :param type_map: How to map Perseus types to numpy.dtype
     :param kwargs: Keyword arguments passed as-is to pandas.read_csv
     :returns: The parsed data frame
     """
-    annotations = read_annotations(path_or_file, separator, type_map)
+    annotations = read_annotations(path_or_file, separator)
     column_index = create_column_index(annotations)
     if 'usecols' in kwargs:
 	    usecols = kwargs['usecols']
 	    if type(usecols[0]) is str:
 		    usecols = sorted([list(column_index).index(x) for x in usecols])
 	    column_index = column_index[usecols]
-    if 'Type' in annotations:
-        dtype = {name : t for name, t in zip(annotations['Column Name'], annotations['Type'])}
-        if 'dtype' in kwargs:
-            dtype.update(kwargs['dtype'])
-        kwargs['dtype'] = dtype
+    kwargs['dtype'] = dict(kwargs.get('dtype', {}), **annotations.get('dtype', {}))
+    kwargs['converters'] = dict(kwargs.get('converters', {}), **annotations.get('converters', {}))
     df = pd.read_csv(path_or_file, sep=separator, comment='#', **kwargs)
     df.columns = column_index
     return df
 
 import numpy as np
 def to_perseus(df, path_or_file, main_columns=None,
-        separator=separator, type_map = dtype_to_perseus,
+        separator=separator,
         numerical_annotation_rows = set([])):
     """
     Save pd.DataFrame to Perseus text format.
@@ -94,8 +94,12 @@ def to_perseus(df, path_or_file, main_columns=None,
     column_names = df.columns.get_level_values('Column Name')
     annotations = {}
     main_columns = _infer_main_columns(df) if main_columns is None else main_columns
-    annotations['Type'] = ['E' if column_names[i] in main_columns else type_map[dtype]
+    annotations['Type'] = ['E' if column_names[i] in main_columns else dtype_to_perseus[dtype]
             for i, dtype in enumerate(df.dtypes)]
+    # detect multi-numeric columns
+    for i, column in enumerate(df.columns):
+        if all(type(value) is list for value in df[column] if value is not None):
+            annotations['Type'][i] = 'M'
     annotation_row_names = set(df.columns.names) - {'Column Name'}
     for name in annotation_row_names:
         annotation_type = 'N' if name in numerical_annotation_rows else 'C'
