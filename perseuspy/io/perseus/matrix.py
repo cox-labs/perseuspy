@@ -7,8 +7,14 @@ def multi_numeric_converter(numbers):
     return [float(num) for num in numbers.split(';') if num != '']
 converters = {'M': multi_numeric_converter}
 perseus_to_dtype = {'E' : float, 'T' : str, 'C' : 'category', 'N' : float}
-dtype_to_perseus = { np.dtype('float') : 'N', np.dtype('str') : 'T', np.dtype('object') : 'T',
-        np.dtype('int64') : 'N', pd.Categorical.dtype : 'C' }
+
+def dtype_to_perseus(dtype):
+    if type(dtype) is pd.core.dtypes.dtypes.CategoricalDtype:
+        return 'C'
+    else:
+        mapping = {np.dtype('float') : 'N', np.dtype('str') : 'T',
+                   np.dtype('object') : 'T', np.dtype('int64') : 'N'}
+        return mapping[dtype]
 
 def read_annotations(path_or_file, separator='\t', reset=True):
     """
@@ -50,6 +56,10 @@ def create_column_index(annotations):
     categorical_rows = {name.replace('C:','',1) : values + [''] * (ncol - len(values)) for name, values in annotations.items() if name.startswith('C:')}
     _column_index.update(categorical_rows)
     column_index = pd.MultiIndex.from_tuples(list(zip(*_column_index.values())), names=list(_column_index.keys()))
+    if len(column_index.names) == 1:
+        # flatten single-level index
+        name = column_index.names[0]
+        column_index = column_index.get_level_values(name)
     return column_index
 
 def read_perseus(path_or_file, **kwargs):
@@ -94,7 +104,7 @@ def to_perseus(df, path_or_file, main_columns=None,
     column_names = df.columns.get_level_values('Column Name')
     annotations = {}
     main_columns = _infer_main_columns(df) if main_columns is None else main_columns
-    annotations['Type'] = ['E' if column_names[i] in main_columns else dtype_to_perseus[dtype]
+    annotations['Type'] = ['E' if column_names[i] in main_columns else dtype_to_perseus(dtype)
             for i, dtype in enumerate(df.dtypes)]
     # detect multi-numeric columns
     for i, column in enumerate(df.columns):
