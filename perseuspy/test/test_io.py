@@ -41,6 +41,7 @@ class TestReading(TestCase):
         df = pd.read_perseus(path.join(TEST_DIR, 'matrix4.txt'))
         self.assertIsNot(df, None)
         self.assertEqual([1,2,3], df.values[0][0])
+        self.assertEqual('1.0;2.0;3.0', to_string(df).splitlines()[-1])
         self.assertEqual("#!{Type}M", type_row(df))
 
     def test_inferring_and_setting_main_columns(self):

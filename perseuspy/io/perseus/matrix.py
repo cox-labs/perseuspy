@@ -99,26 +99,28 @@ def to_perseus(df, path_or_file, main_columns=None,
     :param main_columns: Main columns. Will be infered if set to None. All numeric columns up-until the first non-numeric column are considered main columns.
     :param separator: For separating fields, default '\t'
     """
-    if not df.columns.name:
-        df.columns.name = 'Column Name'
-    column_names = df.columns.get_level_values('Column Name')
+    _df = df.copy()
+    if not _df.columns.name:
+        _df.columns.name = 'Column Name'
+    column_names = _df.columns.get_level_values('Column Name')
     annotations = {}
-    main_columns = _infer_main_columns(df) if main_columns is None else main_columns
+    main_columns = _infer_main_columns(_df) if main_columns is None else main_columns
     annotations['Type'] = ['E' if column_names[i] in main_columns else dtype_to_perseus(dtype)
-            for i, dtype in enumerate(df.dtypes)]
+            for i, dtype in enumerate(_df.dtypes)]
     # detect multi-numeric columns
-    for i, column in enumerate(df.columns):
-        if all(type(value) is list for value in df[column] if value is not None):
+    for i, column in enumerate(_df.columns):
+        if all(type(value) is list for value in _df[column] if value is not None):
             annotations['Type'][i] = 'M'
-    annotation_row_names = set(df.columns.names) - {'Column Name'}
+            _df[column] = _df[column].apply(lambda xs: ';'.join(str(x) for x in xs))   
+    annotation_row_names = set(_df.columns.names) - {'Column Name'}
     for name in annotation_row_names:
         annotation_type = 'N' if name in numerical_annotation_rows else 'C'
-        annotations['{}:{}'.format(annotation_type, name)] = df.columns.get_level_values(name)
+        annotations['{}:{}'.format(annotation_type, name)] = _df.columns.get_level_values(name)
     with PathOrFile(path_or_file, 'w') as f:
         f.write(separator.join(column_names) + '\n')
         for name, values in annotations.items():
             f.write('#!{{{name}}}{values}\n'.format(name=name, values=separator.join([str(x) for x in values])))
-        df.to_csv(f, header=None, index=False, sep=separator)
+        _df.to_csv(f, header=None, index=False, sep=separator)
 
 class PathOrFile():
     """Small context manager for file paths or file-like objects
