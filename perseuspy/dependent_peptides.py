@@ -32,7 +32,7 @@ def _set_column_names(dep, exp):
     :param dep: dependent peptides table.
     :param exp: experimental design table.
     """
-    colnames = exp['Experiment'] + '_' + exp['Fraction'].astype(str)
+    colnames = exp['Experiment'].astype(str) + '_' + exp['Fraction'].astype(str)
     file2col = dict(zip(exp['Raw file'], colnames))
     _dep = dep.rename(columns=file2col)
     _dep.columns.name = 'Column Name'

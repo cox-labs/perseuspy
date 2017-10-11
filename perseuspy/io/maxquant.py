@@ -18,4 +18,5 @@ def read_rawFilesTable(filename):
             ', '.join(sorted(found_columns))])
         raise ValueError(message)
     exp['Raw file'] = exp['File'].apply(path.basename).apply(path.splitext).str.get(0)
+    exp['Experiment'] = exp['Experiment'].astype(str)
     return exp
