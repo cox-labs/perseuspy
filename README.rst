@@ -111,7 +111,7 @@ for python scripting in Perseus.
     df2.to_perseus(outfile) # write pandas.DataFrame in Perseus txt format
     
 Network Plugin template
----------------
+-----------------------
 The following snippet can be used as a starting point
 for python scripting in Perseus (for networks).
 
@@ -132,4 +132,6 @@ Run `./generate_docs.sh` from `bash`.
 
 Licensing and Contributions
 ---------------------------
-`perseuspy` is licensed under the MIT lisence. Contributions are welcome!
+`perseuspy` is licensed under the MIT lisence.
+Contributions are welcome! If you are interested in contributing to code or documentation,
+please read `CONTRIBUTING.rst <CONTRIBUTING.rst>`_.

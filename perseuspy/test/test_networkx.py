@@ -5,9 +5,10 @@ from unittest import TestCase, main
 class TestConvertingBetweenNetworkxAndPerseus(TestCase):
     def test_random_graph(self):
         G = nx.random_graphs.barabasi_albert_graph(10, 3)
-        f,t = G.edges()[0]
-        G.edge[f][t]['Source'] = 'will be overwritten'
-        G.edge[f][t]['Attribute'] = 'should show up'
+        G.name = 'barabase_albert_graph(10,3)'
+        f,t = list(G.edges())[0]
+        G.adj[f][t]['Source'] = 'will be overwritten'
+        G.adj[f][t]['Attribute'] = 'should show up'
         network_table, networks = to_perseus([G])
         self.assertTrue('Name' in network_table.columns)
         self.assertTrue('GUID' in network_table.columns)

@@ -42,8 +42,9 @@ class TestNetworkx(TestCase):
             graphs = nx.from_perseus(networks_table, {'guid': {'name' : 'net', 'guid': 'guid', 'edge_table': edge_table, 'node_table': node_table}})
             self.assertEqual(2, graphs[0].number_of_nodes())
             self.assertEqual(1, graphs[0].number_of_edges())
-            self.assertTrue('Duplicate edges' in str(w[0].message), w[0].message)
-            self.assertTrue('Duplicate nodes' in str(w[1].message), w[1].message)
+            warning_messages = [str(x.message) for x in w if 'deprecated' not in str(x.message)]
+            self.assertTrue('Duplicate edges' in warning_messages[0], warning_messages[0])
+            self.assertTrue('Duplicate nodes' in warning_messages[1], warning_messages[1])
 
     def test_create_networkx_graph(self):
         networks_table, networks = read_networks(path.join(TEST_DIR, 'network_random'))

@@ -17,6 +17,6 @@ setup(name='perseuspy',
         packages=find_packages(),
         install_requires=['pandas >= 0.19', 'networkx'],
         test_suite = 'nose.collector',
-        test_require= ['nose']
+        tests_require= ['nose']
 ) 
 
