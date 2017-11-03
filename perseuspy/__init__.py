@@ -1,7 +1,7 @@
 """
 perseuspy module for Python-Perseus interop.
 """
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 import perseuspy.dependent_peptides
 import perseuspy.io.perseus.matrix
 # Monkey-patching pandas
