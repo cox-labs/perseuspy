@@ -132,4 +132,4 @@ Run `./generate_docs.sh` from `bash`.
 
 Licensing and Contributions
 ---------------------------
-`perseuspy` is licensed under the MIT lisence. Contributions are welcome!
+`perseuspy` is licensed under the MIT lisence. Contributions are welcome! If you are interested in contributing to code or documentation, please read `CONTRIBUTING.rst <CONTRIBUTING.rst>`_.

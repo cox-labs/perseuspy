@@ -6,7 +6,6 @@ from perseuspy.io.perseus.matrix import read_perseus
 import pandas as pd
 import warnings
 
-
 def read_networks(folder):
     """
     Read perseus network collection folder format
