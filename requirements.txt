@@ -1,4 +1,0 @@
-pandas==0.20.1
-numpy==1.12.1
-networkx==1.11
-setuptools==36.5.0

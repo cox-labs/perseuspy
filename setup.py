@@ -1,13 +1,14 @@
 from setuptools import setup, find_packages
-
-from perseuspy import __version__
-
 import os
+HERE = os.path.dirname(__file__)
 def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+    return open(os.path.join(HERE, fname)).read()
+
+# creates version_string
+exec(open(os.path.join(HERE, "perseuspy", "version.py")).read())
 
 setup(name='perseuspy',
-        version=__version__,
+        version=version_string, # read from version.py
         description='Utilities for integrating python scripts into Perseus workflows',
         long_description=read('README.rst'),
         url='http://www.github.com/jdrudolph/perseuspy',
@@ -15,8 +16,7 @@ setup(name='perseuspy',
         author_email='jan.daniel.rudolph@gmail.com',
         license='MIT',
         packages=find_packages(),
-        install_requires=['pandas >= 0.19', 'networkx'],
+        install_requires=['pandas >= 0.21', 'networkx'],
         test_suite = 'nose.collector',
         tests_require= ['nose']
 ) 
-
