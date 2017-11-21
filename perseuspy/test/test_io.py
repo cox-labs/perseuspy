@@ -9,7 +9,7 @@ def to_string(df, **kwargs):
     out = StringIO()
     df.to_perseus(out, **kwargs)
     out.seek(0)
-    return '\n'.join(out.readlines())
+    return ''.join(out.readlines())
 
 def type_row(df, **kwargs):
     lines = to_string(df, **kwargs).splitlines()
@@ -48,6 +48,13 @@ class TestReading(TestCase):
         df = pd.DataFrame({'a' : [2,3], 'b': [1,2], 'c': ['a','b'], 'd': [3,4]})
         self.assertEqual('#!{Type}E\tE\tT\tN', type_row(df))
         self.assertEqual('#!{Type}N\tE\tT\tE', type_row(df, main_columns={'b','d'}))
+
+    def test_writing_empty_table_should_have_all_columns(self):
+        df = pd.DataFrame(columns=pd.Index(['Node'], name='Column Name'))
+        self.assertEqual(1, len(df.columns))
+        self.assertEqual('Column Name', df.columns.name)
+        df_str = to_string(df)
+        self.assertEqual('Node\n#!{Type}T\n', df_str, df_str)
 
 if __name__ == '__main__':
     main()

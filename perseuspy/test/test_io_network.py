@@ -66,6 +66,16 @@ class TestNetworkx(TestCase):
             _edge_table = _networks[guid]['edge_table'].sort_values(['Source', 'Target']).reset_index(drop=True)
             self.assertTrue(node_table.equals(_node_table))
             self.assertTrue(edge_table.equals(_edge_table))
+
+    def test_empty_network_has_all_columns(self):
+        G = nx.Graph()
+        networks_table, networks = nx.to_perseus([G])
+        for guid in networks_table['GUID']:
+            node_table = networks[guid]['node_table']
+            self.assertTrue('Node' in node_table.columns)
+            edge_table = networks[guid]['edge_table']
+            self.assertTrue('Source' in edge_table.columns)
+            self.assertTrue('Target' in edge_table.columns)
         
 if __name__ == '__main__':
     main()

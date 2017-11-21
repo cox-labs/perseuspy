@@ -109,7 +109,8 @@ def to_perseus(df, path_or_file, main_columns=None,
             for i, dtype in enumerate(_df.dtypes)]
     # detect multi-numeric columns
     for i, column in enumerate(_df.columns):
-        if all(type(value) is list for value in _df[column] if value is not None):
+        valid_values = [value for value in _df[column] if value is not None]
+        if len(valid_values) > 0 and all(type(value) is list for value in valid_values):
             annotations['Type'][i] = 'M'
             _df[column] = _df[column].apply(lambda xs: ';'.join(str(x) for x in xs))   
     annotation_row_names = set(_df.columns.names) - {'Column Name'}

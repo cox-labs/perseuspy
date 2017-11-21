@@ -72,10 +72,14 @@ def to_perseus(graphs):
         attributes.update({"Name" : attributes.get("Name", attributes.get("name", "networkx graph")),
             "GUID": attributes.get("GUID", str(uuid.uuid4()))})
         graph_attributes.append(attributes)
-        edge_table = pd.DataFrame([dict(data, **{"Source": str(f), "Target": str(t)}) for f,t,data in graph.edges(data=True)])
-        edge_table.columns.name = "Column Name"
-        node_table = pd.DataFrame([dict(data, **{"Node": str(n)}) for n,data in graph.nodes(data=True)])
-        node_table.columns.name = "Column Name"
+        if len(graph) > 0:
+            edge_table = pd.DataFrame([dict(data, **{"Source": str(f), "Target": str(t)}) for f,t,data in graph.edges(data=True)])
+            edge_table.columns.name = "Column Name"
+            node_table = pd.DataFrame([dict(data, **{"Node": str(n)}) for n,data in graph.nodes(data=True)])
+            node_table.columns.name = "Column Name"
+        else:
+            edge_table = pd.DataFrame(columns=pd.Index(['Source', 'Target'], name='Column Name'))
+            node_table = pd.DataFrame(columns=pd.Index(['Node'], name='Column Name'))
         guid = attributes['GUID']
         networks[guid] = {
             'edge_table': edge_table,
