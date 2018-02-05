@@ -39,6 +39,15 @@ def intParam(parameters, name):
     :param name: the name of the parameter.  """
     return int(_simple_string_value(parameters, 'IntParam', name))
 
+def boolParam(parameters, name):
+    """ boolean parameter value.
+    :param parameters: the parameters tree.
+    :param name: the name of the parameter.  """
+    value = _simple_string_value(parameters, 'BoolParam', name)
+    if value not in {'true', 'false'}:
+        raise ValueError('BoolParam Value has to be either "true" or "false"')
+    return value == 'true'
+
 def doubleParam(parameters, name):
     """ double parameter value.
     :param parameters: the parameters tree.
