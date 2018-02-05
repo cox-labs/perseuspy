@@ -2,6 +2,7 @@ from unittest import TestCase, main
 from os import path
 from io import StringIO
 from perseuspy import pd
+import numpy as np
 
 TEST_DIR = path.dirname(__file__)
 
@@ -55,6 +56,15 @@ class TestReading(TestCase):
         self.assertEqual('Column Name', df.columns.name)
         df_str = to_string(df)
         self.assertEqual('Node\n#!{Type}T\n', df_str, df_str)
+
+    def test_write_bool_column_as_categorical(self):
+        df = pd.DataFrame(columns=pd.Index(['Significant'], name='Column Name'))
+        df['Significant'] = [True, False, True, True]
+        self.assertEqual(df.dtypes[0], np.dtype('bool'))
+        df_str = to_string(df)
+        self.assertEqual('Significant\n#!{Type}C\n+\n\n+\n+\n', df_str, df_str)
+        df_str = to_string(df, convert_bool_to_category=False)
+        self.assertEqual('Significant\n#!{Type}C\nTrue\nFalse\nTrue\nTrue\n', df_str, df_str)
 
 if __name__ == '__main__':
     main()

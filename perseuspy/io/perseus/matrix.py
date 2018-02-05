@@ -5,15 +5,18 @@ from collections import OrderedDict
 separator = '\t'
 def multi_numeric_converter(numbers):
     return [float(num) for num in numbers.split(';') if num != '']
+
 converters = {'M': multi_numeric_converter}
+
 perseus_to_dtype = {'E' : float, 'T' : str, 'C' : 'category', 'N' : float}
 
 def dtype_to_perseus(dtype):
     if type(dtype) is pd.core.dtypes.dtypes.CategoricalDtype:
         return 'C'
     else:
-        mapping = {np.dtype('float') : 'N', np.dtype('str') : 'T',
-                   np.dtype('object') : 'T', np.dtype('int64') : 'N'}
+        mapping = {np.dtype('float'): 'N', np.dtype('str'): 'T',
+                   np.dtype('object'): 'T', np.dtype('int64'): 'N',
+                   np.dtype('bool'): 'C'}
         return mapping[dtype]
 
 def read_annotations(path_or_file, separator='\t', reset=True):
@@ -90,14 +93,17 @@ def read_perseus(path_or_file, **kwargs):
 import numpy as np
 def to_perseus(df, path_or_file, main_columns=None,
         separator=separator,
+        convert_bool_to_category=True,
         numerical_annotation_rows = set([])):
     """
     Save pd.DataFrame to Perseus text format.
 
-    :param df: pd.DataFrame
-    :param path_or_file: File name or file-like object
+    :param df: pd.DataFrame.
+    :param path_or_file: File name or file-like object.
     :param main_columns: Main columns. Will be infered if set to None. All numeric columns up-until the first non-numeric column are considered main columns.
-    :param separator: For separating fields, default '\t'
+    :param separator: For separating fields, default='\t'.
+    :param covert_bool_to_category: Convert bool columns of True/False to category columns '+'/'', default=True.
+    :param numerical_annotation_rows: Set of column names to be interpreted as numerical annotation rows, default=set([]).
     """
     _df = df.copy()
     if not _df.columns.name:
@@ -112,7 +118,13 @@ def to_perseus(df, path_or_file, main_columns=None,
         valid_values = [value for value in _df[column] if value is not None]
         if len(valid_values) > 0 and all(type(value) is list for value in valid_values):
             annotations['Type'][i] = 'M'
-            _df[column] = _df[column].apply(lambda xs: ';'.join(str(x) for x in xs))   
+            _df[column] = _df[column].apply(lambda xs: ';'.join(str(x) for x in xs))
+    if convert_bool_to_category:
+        for i, column in enumerate(_df.columns):
+            if _df.dtypes[i] is np.dtype('bool'):
+                values = _df[column].values
+                _df[column][values] = '+'
+                _df[column][~values] = ''
     annotation_row_names = set(_df.columns.names) - {'Column Name'}
     for name in annotation_row_names:
         annotation_type = 'N' if name in numerical_annotation_rows else 'C'
