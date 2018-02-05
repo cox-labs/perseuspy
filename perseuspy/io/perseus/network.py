@@ -40,7 +40,7 @@ def from_perseus(network_table, networks):
         edge_table = network['edge_table']
         if edge_table[['Source', 'Target']].duplicated().any():
             warnings.warn('Duplicate edges were found and ignored in network {}'.format(network['name']))
-        G = nx.from_pandas_dataframe(edge_table, 'Source', 'Target', True, create_using=nx.DiGraph())
+        G = nx.from_pandas_edgelist(edge_table, 'Source', 'Target', True, create_using=nx.DiGraph())
         for attr, value in zip(network_table.columns, graph_attr):
             G.graph[attr] = value
         node_table = network['node_table']

@@ -16,7 +16,7 @@ setup(name='perseuspy',
         author_email='jan.daniel.rudolph@gmail.com',
         license='MIT',
         packages=find_packages(),
-        install_requires=['pandas >= 0.21', 'networkx'],
+        install_requires=['pandas >= 0.21', 'networkx >= 2.1'],
         test_suite = 'nose.collector',
         tests_require= ['nose']
 ) 
