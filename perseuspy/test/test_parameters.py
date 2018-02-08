@@ -35,5 +35,15 @@ class TestParameters(TestCase):
         self.assertEqual('B', value)
         self.assertEqual(3.0, doubleParam(subparams, 'Sub'))
 
+    def test_bool_with_subparams(self):
+        value, subparam = boolWithSubParams(self.parameters, 'Choose bool')
+        self.assertTrue(value)
+        self.assertEqual('false', stringParam(subparam, 'Sub'))
+
+    def test_bool_with_subparams2(self):
+        value, subparam = boolWithSubParams(self.parameters, 'Choose bool 2')
+        self.assertFalse(value)
+        self.assertEqual(0, len(subparam))
+
 if __name__ == '__main__':
     main()

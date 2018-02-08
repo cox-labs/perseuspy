@@ -67,5 +67,35 @@
         </Parameters>
       </SubParams>
     </SingleChoiceWithSubParams>
+    <BoolWithSubParams Type="BaseLibS.Param.BoolWithSubParams, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Choose bool">
+      <Value>true</Value>
+      <SubParamsFalse>
+        <Parameters />
+      </SubParamsFalse>
+      <SubParamsTrue>
+        <Parameters>
+          <ParameterGroup Name="" CollapsedDefault="false">
+            <StringParam Type="BaseLibS.Param.StringParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Sub">
+	     <Value>false</Value>
+            </StringParam>
+          </ParameterGroup>
+        </Parameters>
+      </SubParamsTrue>
+    </BoolWithSubParams>
+    <BoolWithSubParams Type="BaseLibS.Param.BoolWithSubParams, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Choose bool 2">
+      <Value>false</Value>
+      <SubParamsFalse>
+        <Parameters />
+      </SubParamsFalse>
+      <SubParamsTrue>
+        <Parameters>
+          <ParameterGroup Name="" CollapsedDefault="false">
+            <StringParam Type="BaseLibS.Param.StringParam, BaseLibS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Name="Sub">
+	     <Value>false</Value>
+            </StringParam>
+          </ParameterGroup>
+        </Parameters>
+      </SubParamsTrue>
+    </BoolWithSubParams>
     </ParameterGroup>
   </Parameters>

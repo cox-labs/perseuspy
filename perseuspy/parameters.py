@@ -45,7 +45,7 @@ def boolParam(parameters, name):
     :param name: the name of the parameter.  """
     value = _simple_string_value(parameters, 'BoolParam', name)
     if value not in {'true', 'false'}:
-        raise ValueError('BoolParam Value has to be either "true" or "false"')
+        raise ValueError('BoolParam Value has to be either "true" or "false", was {}.'.format(value))
     return value == 'true'
 
 def doubleParam(parameters, name):
@@ -89,4 +89,17 @@ def singleChoiceWithSubParams(parameters, name, type_converter = str):
     if value < 0:
         return value, None
     return type_converter(values[value].text), param.findall('SubParams/Parameters')[value]
+
+def boolWithSubParams(parameters, name):
+    """ single choice with sub parameters value and chosen subparameters. Returns -1 and None if no value was chosen.
+    :param parameters: the parameters tree.
+    :param name: the name of the parameter.
+    """
+    param = parameters.find(".//BoolWithSubParams[@Name='{name}']".format(name=name))
+    str_value = param.find('Value').text
+    if str_value not in {'true', 'false'}:
+        raise ValueError('BoolParamWithSubParams Value has to be either "true" or "false", was {}'.format(str_value))
+    value = str_value == 'true'
+    choice = 'SubParamsTrue' if value else 'SubParamsFalse'
+    return value, param.find('{}/Parameters'.format(choice))
 
