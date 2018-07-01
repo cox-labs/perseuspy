@@ -62,7 +62,7 @@ class TestReading(TestCase):
         df['Significant'] = [True, False, True, True]
         self.assertEqual(df.dtypes[0], np.dtype('bool'))
         df_str = to_string(df)
-        self.assertEqual('Significant\n#!{Type}C\n+\n\n+\n+\n', df_str, df_str)
+        self.assertEqual('Significant\n#!{Type}C\n+\n""\n+\n+\n', df_str, df_str)
         df_str = to_string(df, convert_bool_to_category=False)
         self.assertEqual('Significant\n#!{Type}C\nTrue\nFalse\nTrue\nTrue\n', df_str, df_str)
 

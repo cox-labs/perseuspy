@@ -23,7 +23,7 @@ class TestReadingAndWritingFromFolder(TestCase):
     def test_writing(self):
         networks_table, networks = read_networks(path.join(TEST_DIR, 'network_random'))
         tmp_dir = path.join(TEST_DIR, 'tmp')
-        makedirs(tmp_dir)
+        makedirs(tmp_dir, exist_ok=True)
         write_networks(tmp_dir, networks_table, networks)
         _networks_table, _networks = read_networks(tmp_dir)
         self.assertTrue(networks_table.equals(_networks_table))
