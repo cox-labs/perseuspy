@@ -37,6 +37,13 @@ class TestReading(TestCase):
         self.assertIsNot(to_string(df), '')
         self.assertEqual('#!{Type}' + (3 * 'E\t') + 'C',
                 '\t'.join(type_row(df).split('\t')[:4]))
+
+    def test_reading_numerical_annotation_row(self):
+        df = pd.read_perseus(path.join(TEST_DIR, 'matrix5.txt'))
+        self.assertIsNot(df, None)
+        self.assertIsNot(to_string(df), '')
+        self.assertEqual('#!{C:Quantity1}1.0\t2.0\t3.0\tnan\tnan\tnan\tnan\tnan\tnan\tnan\tnan\tnan\tnan\tnan',
+                to_string(df).splitlines()[2])
     
     def test_reading_multi_numeric_columns(self):
         df = pd.read_perseus(path.join(TEST_DIR, 'matrix4.txt'))
@@ -62,7 +69,7 @@ class TestReading(TestCase):
         df['Significant'] = [True, False, True, True]
         self.assertEqual(df.dtypes[0], np.dtype('bool'))
         df_str = to_string(df)
-        self.assertEqual('Significant\n#!{Type}C\n+\n\n+\n+\n', df_str, df_str)
+        self.assertEqual('Significant\n#!{Type}C\n+\n""\n+\n+\n', df_str, df_str)
         df_str = to_string(df, convert_bool_to_category=False)
         self.assertEqual('Significant\n#!{Type}C\nTrue\nFalse\nTrue\nTrue\n', df_str, df_str)
 

@@ -49,15 +49,26 @@ def read_annotations(path_or_file, separator='\t', reset=True):
                 annotations[name] = values
     return annotations
 
+def annotation_rows(prefix, annotations):
+    """
+    Helper function to extract N: and C: rows from annotations and pad their values
+    """
+    ncol = len(annotations['Column Name'])
+    return {name.replace(prefix, '', 1) : values + [''] * (ncol - len(values))
+            for name, values in annotations.items() if name.startswith(prefix)}
+
+
 def create_column_index(annotations):
     """
     Create a pd.MultiIndex using the column names and any categorical rows.
     Note that also non-main columns will be assigned a default category ''.
     """
     _column_index = OrderedDict({'Column Name' : annotations['Column Name']})
-    ncol = len(_column_index['Column Name'])
-    categorical_rows = {name.replace('C:','',1) : values + [''] * (ncol - len(values)) for name, values in annotations.items() if name.startswith('C:')}
+    categorical_rows = annotation_rows('C:', annotations)
     _column_index.update(categorical_rows)
+    numerical_rows = {name: [float(x) if x != '' else float('NaN') for x in values]
+            for name, values in annotation_rows('N:', annotations).items()} # to floats
+    _column_index.update(numerical_rows)
     column_index = pd.MultiIndex.from_tuples(list(zip(*_column_index.values())), names=list(_column_index.keys()))
     if len(column_index.names) == 1:
         # flatten single-level index
