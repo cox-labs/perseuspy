@@ -10,25 +10,26 @@ perseuspy README
 .. image:: https://travis-ci.org/jdrudolph/perseuspy.svg?branch=master
     :target: https://travis-ci.org/jdrudolph/perseuspy
 
-This repository contains the source code of the `perseuspy` software package.
-`perseuspy` contains convenience functions which allow for faster and easier development
+This repository contains the source code of the ``perseuspy`` software package.
+``perseuspy`` contains convenience functions which allow for faster and easier development
 of plugins for `Perseus <https://maxquant.org/perseus>`_ in the Python programming language.
-This page contains installation instructions and developer information on `perseuspy`, for high-level information please
+This page contains installation instructions and developer information on ``perseuspy``, for high-level information please
 refer to the manuscript listed below.
 
-`PerseusR` was designed to work in conjunction with the `PluginInterop <https://github.com/jdrudolph/PluginInterop>`_
+``perseuspy`` was designed to work in conjunction with the `PluginInterop <https://github.com/jdrudolph/PluginInterop>`_
 plugin, but can also be used stand-alone.
 
 Citation
 --------
 
-If you use `PerseusR` in your projects, please cite
+If you use ``perseuspy`` in your projects, please cite
 
 Rudolph, J D and Cox, J 2018, *A network module for the Perseus software for computational proteomics facilitates proteome interaction graph analysis* `doi:10.1101/447268 <https://doi.org/10.1101/447268>`_.
 
 Installation
 ------------
-`perseuspy` can be installed directly from `pip`. If you are new to Python, more detailed installation instructions for windows are provided below.
+``perseuspy`` can be installed directly from `pip`. If you are new to Python, more detailed installation instructions for windows are provided below.
+
 .. code:: bash
 
     pip install perseuspy
@@ -41,7 +42,7 @@ Perseus provides activities to call Python scripts from within the workflow via
 Developing a plugin therefore translates to writing a Python script that follows
 a small set of conventions. By adhering to these conventions, Perseus will be
 able to successfully communicate with R and transfer inputs and results between
-the programs. `PerseusR` provides the neccessary functions to make plugin development
+the programs. ``perseuspy`` provides the neccessary functions to make plugin development
 in Python easy and straight forward.
 
 Matrix plugin
@@ -84,30 +85,30 @@ Updating to the latest version
 
 Installation (Windows long)
 ---------------------------
-First open a terminal by searching for `cmd.exe` in the start menu. Here we can easily
+First open a terminal by searching for ``cmd.exe`` in the start menu. Here we can easily
 check if all required programs are installed.
 
-#. Check to see if the `pip` executable is already available.
+#. Check to see if the ``pip`` executable is already available.
    ::
 
       pip install perseuspy
 
    If there is no error you are already done. If it fails, continue with the next steps.
-#. Navigate to the installation directory of your `Python` installation. If it is installed
-   e.g. `D:/Programs/Python/` we would first change the drive letter (maybe unnecessary)
+#. Navigate to the installation directory of your Python installation. If it is installed
+   e.g. ``D:/Programs/Python/`` we would first change the drive letter (maybe unnecessary)
    and then go to the installation directory.
    ::
 
        D:
        cd Programs/Python
 
-   Now we should be able to run `python` from the command line.
+   Now we should be able to run ``python`` from the command line.
    ::
        
        python.exe --version
 
    This should print the installed version of python
-#. Navigate to the `Scripts` directory and run the installation
+#. Navigate to the ``Scripts`` directory and run the installation
    ::
 
        cd Scripts
@@ -118,24 +119,25 @@ check if all required programs are installed.
 
        pip install --upgrade perseuspy
 
-#. Test the installation by navigating back to the `Python` folder and trying to import `perseuspy`.
+#. Test the installation by navigating back to the Python folder and trying to import ``perseuspy``.
    ::
 
        cd ..
        python.exe
 
-   Now you should be inside the `python` interpreter. Check the installation by running.
+   Now you should be inside the ``python`` interpreter. Check the installation by running.
    ::
 
        import perseuspy
 
-   If the command doesn't produce any error you can exit `python` by pressing `CTRL+c`.
-#. Add `python` to your `PATH` (optional). Makes it easier for Perseus to find the Python
-   installation. There are many resources on how to add programs to the `PATH` available online.
+   If the command doesn't produce any error you can exit ``python`` by pressing `CTRL+c`.
+#. Add ``python`` to your ``PATH`` (optional, recommended). Makes it easier for Perseus to find the Python
+   installation. There are many resources on how to add programs to the ``PATH`` available online. No description
+   is provided here since instructions are specific to the version of Windows that is used.
 
 Usage
 ------------
-You can use `perseuspy` just like any other python module.
+You can use ``perseuspy`` just like any other python module.
 
 .. code:: python
 
@@ -148,10 +150,10 @@ You can use `perseuspy` just like any other python module.
 
 Generating the developer documentation
 --------------------------------------
-Run `./generate_docs.sh` from `bash`.
+Run ``./generate_docs.sh`` from ``bash``.
 
 Licensing and Contributions
 ---------------------------
-`perseuspy` is licensed under the MIT lisence.
+``perseuspy`` is licensed under the MIT lisence.
 Contributions are welcome! If you are interested in contributing to code or documentation,
 please read `CONTRIBUTING.rst <CONTRIBUTING.rst>`_.
