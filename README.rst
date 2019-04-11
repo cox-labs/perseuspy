@@ -7,8 +7,8 @@ perseuspy README
 
 .. sphinx-inclusion-marker-do-not-remove
 
-.. image:: https://travis-ci.org/jdrudolph/perseuspy.svg?branch=master
-    :target: https://travis-ci.org/jdrudolph/perseuspy
+.. image:: https://travis-ci.org/cox-labs/perseuspy.svg?branch=master
+    :target: https://travis-ci.org/cox-labs/perseuspy
 
 This repository contains the source code of the ``perseuspy`` software package.
 ``perseuspy`` contains convenience functions which allow for faster and easier development
@@ -16,7 +16,7 @@ of plugins for `Perseus <https://maxquant.org/perseus>`_ in the Python programmi
 This page contains installation instructions and developer information on ``perseuspy``, for high-level information please
 refer to the manuscript listed below.
 
-``perseuspy`` was designed to work in conjunction with the `PluginInterop <https://github.com/jdrudolph/PluginInterop>`_
+``perseuspy`` was designed to work in conjunction with the `PluginInterop <https://github.com/cox-labs/PluginInterop>`_
 plugin, but can also be used stand-alone.
 
 Citation
@@ -38,7 +38,7 @@ Developing plugins
 ==================
 
 Perseus provides activities to call Python scripts from within the workflow via
-`PluginInterop <https://github.com/jdrudolph/PluginInterop>`_, e.g. `Matrix => Python`.
+`PluginInterop <https://github.com/cox-labs/PluginInterop>`_, e.g. `Matrix => Python`.
 Developing a plugin therefore translates to writing a Python script that follows
 a small set of conventions. By adhering to these conventions, Perseus will be
 able to successfully communicate with R and transfer inputs and results between
