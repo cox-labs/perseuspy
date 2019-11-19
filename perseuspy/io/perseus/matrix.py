@@ -191,3 +191,13 @@ def _infer_main_columns(df, index_level='Column Name', numeric_dtypes=_numeric_d
             break
     return main_columns
 
+def main_df(infile, df):
+    annotations = read_annotations(infile)
+    main_index = []
+    i = 0
+    for c_type in annotations['Type']:
+        if c_type == 'E':
+            main_index.append(i)
+        i = i + 1
+    main_dataframe = df.ix[:, main_index[0]:main_index[-1]+1]
+    return main_dataframe
