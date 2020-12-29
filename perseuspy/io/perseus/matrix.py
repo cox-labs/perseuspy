@@ -144,7 +144,7 @@ def to_perseus(df, path_or_file, main_columns=None,
         f.write(separator.join(column_names) + '\n')
         for name, values in annotations.items():
             f.write('#!{{{name}}}{values}\n'.format(name=name, values=separator.join([str(x) for x in values])))
-        _df.to_csv(f, header=None, index=False, sep=separator, encoding='utf-8')
+        _df.to_csv(f, header=None, index=False, sep=separator)
 
 class PathOrFile():
     """Small context manager for file paths or file-like objects
